@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_095008) do
+ActiveRecord::Schema.define(version: 2020_10_08_110508) do
 
   create_table "habits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(version: 2020_09_21_095008) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["target_id"], name: "index_habits_on_target_id"
+  end
+
+  create_table "small_targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "content"
+    t.integer "happiness_grade", default: 0, null: false
+    t.integer "hardness_grade", default: 0, null: false
+    t.boolean "is_ahieved", default: false, null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["target_id"], name: "index_small_targets_on_target_id"
   end
 
   create_table "targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -51,5 +63,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_095008) do
   end
 
   add_foreign_key "habits", "targets"
+  add_foreign_key "small_targets", "targets"
   add_foreign_key "targets", "users"
 end

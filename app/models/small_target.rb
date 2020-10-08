@@ -1,0 +1,2 @@
+class SmallTarget < ApplicationRecord
+end
