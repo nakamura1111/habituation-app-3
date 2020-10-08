@@ -1,0 +1,39 @@
+<div class="nes-container with-title main">
+  <h2 class="title"><%= "鍛錬メニュー詳細表示" %></h2>
+  <%# 目標詳細表示の説明 %>
+  <div class="instruction">
+    <%= render partial: "shared/ash_talk", locals: {talk_content: "ここでは鍛錬の詳細を見ることができるよ！"} %>
+  </div>
+  <%# /目標詳細表示の説明 %>
+  <%# 習慣詳細 %>
+  <div class="nes-container with-title habit-box">
+    <h3 class='title habit-name'><%= @habit.name %></h3>
+    <%# 習慣達成率 %>
+    <% if @achieved_ratio >= 4.0/7*100 %>
+    <p class="habit-achieved-ratio nes-text is-success"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
+    <% elsif @achieved_ratio >= 1.0/7*100 %>
+    <p class="habit-achieved-ratio nes-text is-warning"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
+    <% else %>
+    <p class="habit-achieved-ratio nes-text is-error"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
+    <% end %>
+    <%# 難易度、達成状況 %>
+    <%= render partial: "shared/habit_desc", locals: {habit: @habit, achieved_status: @achieved_status} %>
+    <%# 習慣の内容 %>
+    <div class="nes-container with-title habit-content-box">
+      <h3 class='title'><%= "鍛錬内容" %></h3>
+      <%= @habit.content %>
+    </div>
+  </div>
+  <%# /習慣詳細 %>
+
+  <%# リンク %>
+  <div class="nes-container links">
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
+        <%= link_to "目標の詳細、鍛錬メニューを見る？", target_path(@target) %>
+      </div>
+    </div>
+  </div>
+  <%# /リンク %>
+</div>

@@ -1,0 +1,35 @@
+<div class="nes-container with-title main-form">
+  <h2 class="title"><%= "能力値の設定" %></h2>
+  <%# 能力値設定の説明 %>
+  <div class="instruction">
+    <%= render partial: "shared/ash_talk", locals: {talk_content: "達成したい目標、その目標を表す指標となる能力値名をつけよう！"} %>
+  </div>
+  <%# /能力値設定の説明 %>
+  <%# 目標入力フォーム %>
+  <%= form_with model: @target, url: targets_path, method: :post, local: true, class: "input-form" do |f| %>
+    <% if flash[:error] != nil %>
+    <%= render partial: "shared/ash_talk", locals: {talk_content: flash[:error]} %>
+    <%= render "shared/error_messages", model: f.object %>
+    <% end %>
+    <div class="target-content-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "達成目標を入力しよう！"} %>
+      <% f.label :content, "達成目標" %><br />
+      <%= f.text_area :content, class: "nes-textarea", placeholder: "3ヶ月で体重を〇〇kgから・・kgに落とす！、YY/MM/DDに受ける予定の〇〇試験に合格する！、など" %>
+    </div>
+    <div class="target-name-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "目標に能力値名を名付けよう！" } %>
+      <% f.label :name, "能力値名" %><br />
+      <%= f.text_field :name, class: "nes-input", placeholder: "美しさ、筋力、英語力、数学力など"%>
+    </div>
+    <div class="submit-button-box">
+      <%= f.submit "登録" %>
+    </div>
+  <% end %>
+  <%# /目標入力フォーム %>
+  <div class="message-list">
+    <i class="nes-ash"></i>
+    <div class="nes-balloon from-left">
+      <%= link_to "パラメータ一覧に戻る", root_path %>
+    </div>
+  </div>
+</div>

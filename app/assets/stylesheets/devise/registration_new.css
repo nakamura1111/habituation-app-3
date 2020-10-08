@@ -1,0 +1,32 @@
+.main-form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 40px;
+  background-color: lightgreen;
+}
+
+/* ユーザ新規登録フォーム */
+.input-form{
+  width: 100%;
+  margin: 40px 0;
+}
+.user-nickname-input-box{
+  width: 100%;
+}
+.user-email-input-box{
+  width: 100%;
+  margin-top: 40px;
+}
+.user-passwd-input-box{
+  width: 100%;
+  margin-top: 40px;
+}
+.user-passwd-conf-input-box{
+  width: 100%;
+  margin-top: 40px;
+}
+.submit-button-box{
+  margin: 20px 0;
+}
+/* /ユーザ新規登録フォーム */

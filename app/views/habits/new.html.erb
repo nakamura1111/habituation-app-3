@@ -1,0 +1,37 @@
+<div class="nes-container with-title main-form">
+  <h2 class="title"><%= "鍛錬の登録" %></h2>
+  <%# 習慣入力フォーム %>
+  <%= form_with model: @habit, url: target_habits_path(@target), method: :post, local: true, class: "input-form" do |f| %>
+    <% if flash[:error] != nil %>
+    <%= render partial: "shared/ash_talk", locals: {talk_content: flash[:error]} %>
+    <%= render "shared/error_messages", model: f.object %><br />
+    <% end %>
+    <div class="habit-name-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "鍛錬の内容を入力しよう"} %>
+      <% f.label :name, "鍛錬の内容" %><br />
+      <%= f.text_field :name, class: "nes-input", placeholder: "筋トレを15分やる、参考書の問題を5問解く、など" %>
+    </div>
+    <div class="habit-content-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "鍛錬の内容を詳しく入力しよう"} %>
+      <% f.label :content, "鍛錬の詳細な内容" %><br />
+      <%= f.text_area :content, class: "nes-textarea", placeholder: "腹筋1分、腕立て1分、スクワット1分... 、〇〇のテキストを使用する、など" %>
+    </div>
+    <div class='habit-difficulty-input-box'>
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "鍛錬の難易度を決めよう"} %>
+      <% f.label :content, "難易度" %><br />
+      <div class="nes-select">
+        <%= f.collection_select(:difficulty_grade, Difficulty.all, :id, :name, {}, {}) %>
+      </div>
+    </div>
+    <div class="submit-button-box">
+      <%= f.submit "登録" %>
+    </div>
+  <% end %>
+  <%# /習慣入力フォーム %>
+  <div class="message-list">
+    <i class="nes-ash"></i>
+    <div class="nes-balloon from-left">
+      <%= link_to "目標の表示画面に戻る？", target_path(@target) %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HabituationApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%# ドット調のCSSのオープンソース(NES.css)を導入 %>
+    <%= stylesheet_link_tag 'https://unpkg.com/nes.css@latest/css/nes.min.css' %>
+    <%# NES.cssに美咲フォントの導入 %>
+    <%
+=begin%>
+ <style>
+      @font.face{
+        font_family: 'misaki_gothic'
+        src: font-url('assets/fonts/misaki_tff_2019-10-19/misaki_gothic.ttf') format('truetype');
+      }
+      html, body, pre, code, kbd, samp {
+        font-family: "misaki_gothic";
+      }
+    </style>   
+<%
+=end%>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+
+  <%
+=begin%>
+ MIT License
+
+Copyright (c) 2018 B.C.Rikko <https://github.com/BcRikko>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. 
+<%
+=end%>
+
+</html>

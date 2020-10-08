@@ -1,0 +1,41 @@
+<div class="nes-container with-title main-form">
+  <h2 class="title"><%= "ログイン画面" %></h2>
+  <%# ログインフォーム %>
+  <%= form_with model: @user, url: user_session_path, class: "input-form" do |f| %>
+    <%# エラーメッセージ %>
+    <% if flash[:notice] != nil %>
+    <%= render partial: "shared/ash_talk", locals: {talk_content: flash[:notice]} %>
+    <% end %>
+    <% if flash[:alert] != nil %>
+    <%= render partial: "shared/ash_talk", locals: {talk_content: flash[:alert]} %>
+    <% end %>
+    <%# メールアドレス入力 %>
+    <div class="user-email-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "メールアドレスを入力しよう!"} %>
+      <% f.label :email, "メールアドレス" %><br />
+      <%= f.email_field :email, class: "nes-textarea" %>
+    </div>
+    <%# パスワード入力 %>
+    <div class="user-passwd-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "パスワードを入力しよう!"} %>
+      <% f.label :password, "パスワード" %><%= "（英数混合で7文字以上）" %><br />
+      <%= f.password_field :password, class: "nes-input" %>
+    </div>
+    <%
+=begin%>
+  <% if devise_mapping.rememberable? %>
+      <div class="field">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me, "ログイン情報を記憶しておきますか？" %>
+      </div>
+    <% end %> 
+  <%
+=end%>
+    <div class="submit-button-box">
+      <%= f.submit "ログイン" %>
+    </div>
+  <% end %>
+  <%# /ログインフォーム %>
+
+  <%= render "devise/shared/links" %>
+</div>

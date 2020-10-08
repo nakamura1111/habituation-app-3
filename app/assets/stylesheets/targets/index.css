@@ -1,0 +1,44 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px;
+  background-color: lightgreen;
+}
+
+/* 目標の一覧表示 */
+.target-lists{
+  width: 95%;
+  margin: 10px;
+  background-color: green;
+}
+.target-box{
+  margin: 10px;
+  background-color: white;
+}
+.target-level{
+  margin: 10px;
+}
+.target-exp-box{
+  display: flex;
+  align-items: center;
+}
+.exp-string{
+  margin: 10px;
+}
+.exp-bar{
+  width: 50%;
+  margin: 10px;
+}
+/* /目標の一覧表示 */
+
+/* リンク */
+.links{
+  width: 95%;
+  margin: 10px;
+  background-color: white;
+}
+.message-list{
+  display: flex;
+}
+/* /リンク */

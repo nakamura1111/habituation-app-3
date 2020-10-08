@@ -1,0 +1,38 @@
+<div class="nes-container main">
+  <%# 目標の一覧表示 %>
+  <div class="nes-container with-title target-lists">
+    <h3 class="title"><%= "能力値一覧" %></h3>
+    <% @targets.each do |target| %>
+    <div class="nes-container with-title target-box">
+      <h3 class="title target-name" ><%= link_to target.name, target_path(target) %></h3>
+      <div class="target-level" id="target-level"><%= "Lv. " %><%= target.level %></div>
+      <div class="target-exp-box">
+        <div class="exp-string"><%= "exp:" %></div>
+        <progress class="nes-progress is-success exp-bar" value=<%= target.exp %> max="10"></progress>
+      </div>
+      <%= "設定日：" %><%= l target.created_at %>
+    </div>
+    <% end %>
+  </div>
+  <%# /目標の一覧表示 %>
+
+  <%# リンク %>
+  <% if flash[:success] != nil %>
+  <%= render partial: "shared/ash_talk", locals: {talk_content: flash[:success]} %>
+  <% end %>
+  <div class="nes-container links">
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
+        <%= link_to "ログアウトする？", destroy_user_session_path, method: :delete %>
+      </div>
+    </div>
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
+        <%= link_to "目標を設定する？", new_target_path %>
+      </div>
+    </div>
+  </div>
+  <%# /リンク %>
+</div>

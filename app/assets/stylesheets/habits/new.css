@@ -1,0 +1,34 @@
+.main-form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 40px;
+  background-color: lightgreen;
+}
+/* 共通 */
+.message-list{
+  display: flex;
+}
+/* /共通 */
+
+
+/* 習慣入力フォーム */
+.input-form{
+  width: 100%;
+  margin: 40px 0;
+}
+.habit-name-input-box{
+  width: 100%;
+}
+.habit-content-input-box{
+  width: 100%;
+  margin-top: 40px;
+}
+.habit-difficulty-input-box{
+  width: 100%;
+  margin-top: 40px;
+}
+.submit-button-box{
+  margin: 20px 0;
+}
+/* /習慣入力フォーム */

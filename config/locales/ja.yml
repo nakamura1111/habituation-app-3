@@ -1,0 +1,21 @@
+ja:
+  time:
+    format:
+      default: "%Y/%m/%d"
+  activerecord:
+    attributes:
+      user:
+        nickname: ニックネーム
+      target:
+        name: パラメータ名
+        content: 達成目標
+      habit:
+        name: 鍛錬内容（習慣）
+        content: 詳細内容
+        difficulty_grade: 難易度
+        achieved_or_not_binary: 達成状況
+        achieved_days: 達成日数
+        is_active: 
+  errors:
+    messages:
+      invalid: の入力を確認してください

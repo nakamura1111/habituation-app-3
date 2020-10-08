@@ -1,0 +1,59 @@
+<div class="nes-container with-title main">
+  <h2 class="title"><%= "目標詳細表示" %></h2>
+  <%# 目標詳細表示の説明 %>
+  <div class="instruction">
+    <%= render partial: "shared/ash_talk", locals: {talk_content: "ここでは目標に関する詳細を見ることができるよ"} %>
+  </div>
+  <%# /目標詳細表示の説明 %>
+  <%# 目標の詳細表示 %>
+  <div class="nes-container with-title target-box">
+    <h3 class="title target-name" ><%= @target.name %></h3>
+    <div class="target-level" id="target-level">
+      <%= "Lv. #{@target.level}" %>
+    </div>
+    <div class="target-exp-box">
+      <div class="exp-string">
+        <%= "exp:" %>
+      </div>
+      <progress class="nes-progress is-success exp-bar" id="exp-bar" value=<%= @target.exp %> max="10"></progress>
+    </div>
+    <div class="nes-container with-title target-content-box">
+      <h3 class="title"><%= '能力値詳細（目標）' %></h3>
+      <%= @target.content %>
+    </div>
+    <%= "設定日：" %><%= l @target.created_at %>
+  </div>
+  <%# /目標の詳細表示 %>
+  <%# リンク %>
+  <div class="nes-container links">
+    <% if flash[:success] != nil %>
+    <%= render partial: "shared/ash_talk", locals: {talk_content: flash[:success]} %>
+    <% end %>
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
+        <%= link_to "鍛錬メニューを追加する？", new_target_habit_path(@target) %>
+      </div>
+    </div>
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
+        <%= link_to "目標の一覧を見る？", targets_path %>
+      </div>
+    </div>
+  </div>
+  <%# /リンク %>
+  <%# 習慣一覧 %>
+  <div class="nes-container with-title habit-lists">
+    <h3 class="title"><%= "鍛錬メニュー" %></h3>
+    <% @target.habits.each_with_index do |habit, i| %>
+    <div class="nes-container with-title habit-box">
+      <h3 class='title'>
+        <%= link_to habit.name, target_habit_path(@target, habit), method: :get, id: "habit-show-#{habit.id}" %>
+      </h3>
+      <%= render partial: "shared/habit_desc", locals: {habit: habit, achieved_status: @achieved_statuses[i]} %>
+    </div>
+    <% end %>
+  </div>
+  <%# /習慣一覧 %>
+</div>

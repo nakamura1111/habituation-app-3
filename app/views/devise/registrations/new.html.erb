@@ -1,0 +1,52 @@
+<div class="nes-container with-title main-form">
+  <h2 class="title"><%= "ユーザ新規登録" %></h2>
+  <%# アプリ説明 %>
+  <div class="instruction">
+    <%= render partial: "shared/ash_talk", locals: {talk_content: "このアプリは達成したい目標をたて、達成するためにやることをチェックできるアプリだよ"} %>
+    <%= render partial: "shared/ash_talk", locals: {talk_content: "まずはユーザ登録をしよう!"} %>
+  </div>
+  <%# /アプリ説明 %>
+  
+  <%# 新規登録フォーム %>
+  <%= form_with model: @user, url: user_registration_path, local: true, class: "input-form" do |f| %>
+    <%# エラー出力 %>
+    <%= render "devise/shared/error_messages", model: f.object %>
+    <%# ニックネーム入力 %>
+    <div class="user-nickname-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "ニックネームを登録をしよう!"} %>
+      <% f.label :nickname, "ニックネーム" %><br />
+      <%= f.text_field :nickname, class: "nes-input", autocomplete: "nickname" %>
+    </div>
+    <%# メールアドレス入力 %>
+    <div class="user-email-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "メールアドレスを登録をしよう!"} %>
+      <% f.label :email, "メールアドレス" %><br />
+      <%= f.email_field :email, class: "nes-textarea" %>
+    </div>
+    <%# パスワード入力 %>
+    <div class="user-passwd-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "パスワードを登録をしよう!"} %>
+      <% f.label :password, "パスワード" %><%= "（英数混合で7文字以上）" %><br />
+      <%
+=begin%>
+  <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br /> 
+  <%
+=end%>
+      <%= f.password_field :password, class: "nes-input" %>
+    </div>
+    <div class="user-passwd-conf-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "もう一度パスワードを入力しよう!"} %>
+      <% f.label :password_confirmation, "パスワード（確認用）" %><br />
+      <%= f.password_field :password_confirmation, class: "nes-input" %>
+    </div>
+
+    <div class="submit-button-box">
+      <%= f.submit "登録" %>
+    </div>
+  <% end %>
+  <%# 新規登録フォーム %>
+
+  <%= render "devise/shared/links" %>
+</div>
