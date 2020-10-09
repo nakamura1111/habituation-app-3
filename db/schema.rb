@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_110508) do
     t.text "content"
     t.integer "happiness_grade", default: 0, null: false
     t.integer "hardness_grade", default: 0, null: false
-    t.boolean "is_ahieved", default: false, null: false
+    t.boolean "is_achieved", default: false, null: false
     t.bigint "target_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
