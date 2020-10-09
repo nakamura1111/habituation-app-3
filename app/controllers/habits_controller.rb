@@ -46,7 +46,7 @@ class HabitsController < ApplicationController
   def habit_params
     params.require(:habit).permit(:name, :content, :difficulty_grade).merge(target: @target, achieved_or_not_binary: 0, achieved_days: 0, is_active: true)
   end
-
+  # small_targetsコントローラにも同様の記述あり
   def current_target
     @target = Target.find(params[:target_id])
   end
