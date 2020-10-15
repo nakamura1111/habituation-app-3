@@ -30,7 +30,7 @@
     </div>
     <div class='small-target-hardness-input-box'>
       <%= render partial: "shared/ash_talk", locals: {talk_content: "どれぐらい大変だった？"} %>
-      <% f.label :hardness_grade, "嬉しさ" %><br />
+      <% f.label :hardness_grade, "大変さ" %><br />
       <div class="nes-select">
         <%= f.collection_select(:hardness_grade, Hardness.all, :id, :name, {}, {}) %>
       </div>

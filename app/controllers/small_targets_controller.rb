@@ -5,32 +5,34 @@ class SmallTargetsController < ApplicationController
     @small_target = SmallTarget.new
   end
 
-  # def create
-  #   is_achieved = true  if is_achieved?(params[:small_target][:happiness_grade], params[:small_target][:hardness_grade])
-  #   @small_target = SmallTarget.new(small_target_params)
-  #   if @small_target.save
-  #     flash[:success] = "登録完了！"
-  #     redirect_to target_path(@small_target)
-  #   else
-  #     flash[:error] = "登録失敗..."
-  #     render :new
-  #   end
-  # end
+  def create
+    # レコード作成
+    @small_target = SmallTarget.new(small_target_params)
+    # is_achieved カラムの設定
+    if params[:small_target][:happiness_grade] == "0" && params[:small_target][:hardness_grade] == "0"
+      @small_target.is_achieved = false
+    elsif params[:small_target][:happiness_grade] != "0" && params[:small_target][:hardness_grade] != "0"
+      @small_target.is_achieved = true
+    else
+      flash[:error] = "登録失敗..."
+      render :new
+      return
+    end
+    # DB保存とリクエスト
+    if @small_target.save
+      flash[:success] = "登録完了！"
+      redirect_to target_path(@target)
+    else
+      flash[:error] = "登録失敗..."
+      render :new
+    end
+  end
 
   private
 
-  # def small_target_params
-  #   params.require(:habit).permit(:name, :content, :happiness_grade, :hardness_grade).merge(target: @target)
-  # end
-
-  # def is_achieved?(happiness_grade, hardness_grade)
-  #   if happiness_grade != 0 && hardness_grade != 0
-  #     return true
-  #   else
-  #     return -1
-  #   end
-  # end
-  
+  def small_target_params
+    params.require(:small_target).permit(:name, :content, :happiness_grade, :hardness_grade).merge(target: @target)
+  end
 
   # habitsコントローラにも同様の記述あり
   def current_target
