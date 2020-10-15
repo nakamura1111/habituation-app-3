@@ -14,6 +14,7 @@ class Target < ApplicationRecord
   # バリデーション
   belongs_to :user
   has_many :habits
+  has_many :small_targets
 
   # attr_accessorでインスタンス変数作成すれば、levelとexp要らなかったね
 

@@ -38,6 +38,12 @@
     <div class="message-list">
       <i class="nes-ash"></i>
       <div class="nes-balloon from-left">
+        <%= link_to "小目標・実績を追加する？", new_target_small_target_path(@target) %>
+      </div>
+    </div>
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
         <%= link_to "目標の一覧を見る？", targets_path %>
       </div>
     </div>
@@ -56,4 +62,16 @@
     <% end %>
   </div>
   <%# /習慣一覧 %>
+  <%# 小目標一覧 %>
+  <div class="nes-container with-title small-target-lists">
+    <h3 class="title"><%= "小目標・達成事項一覧" %></h3>
+    <% @target.small_targets.each_with_index do |small_target, i| %>
+    <div class="nes-container with-title small-target-box">
+      <h3 class='title'>
+        <%= link_to small_target.name, "#", method: :get, id: "small-target-show-#{small_target.id}" %>
+      </h3>
+    </div>
+    <% end %>
+  </div>
+  <%# /小目標一覧 %>
 </div>
