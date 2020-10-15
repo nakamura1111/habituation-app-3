@@ -21,18 +21,27 @@
       <% f.label :content, "小目標の詳細な内容" %><br />
       <%= f.text_area :content, class: "nes-textarea", placeholder: "記録に残しておくと後で達成した時のことを思い出しやすくなるよ！" %>
     </div>
-    <div class='small-target-happiness-input-box'>
-      <%= render partial: "shared/ash_talk", locals: {talk_content: "達成した今の気持ちは？"} %>
-      <% f.label :happiness_grade, "嬉しさ" %><br />
-      <div class="nes-select">
-        <%= f.collection_select(:happiness_grade, Happiness.all, :id, :name, {}, {}) %>
-      </div>
-    </div>
-    <div class='small-target-hardness-input-box'>
-      <%= render partial: "shared/ash_talk", locals: {talk_content: "どれぐらい大変だった？"} %>
-      <% f.label :hardness_grade, "大変さ" %><br />
-      <div class="nes-select">
-        <%= f.collection_select(:hardness_grade, Hardness.all, :id, :name, {}, {}) %>
+    <div class="nes-container">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "この目標は達成してる？"} %>
+      <%= f.label :is_achieved, "達成した" %>
+      <%= f.radio_button :is_achieved, true, {id: "radio-true"} %>
+      <%= f.label :is_achieved, "まだ達成してない" %>
+      <%= f.radio_button :is_achieved, false, {id: "radio-false", checked: true} %>
+      <div class="hidden" id="small-target-achieved-pull-down">
+        <div class='small-target-happiness-input-box'>
+          <%= render partial: "shared/ash_talk", locals: {talk_content: "達成した今の気持ちは？(「未達成」以外を選んでね)"} %>
+          <% f.label :happiness_grade, "嬉しさ" %><br />
+          <div class="nes-select">
+            <%= f.collection_select(:happiness_grade, Happiness.all, :id, :name, {}, {}) %>
+          </div>
+        </div>
+        <div class='small-target-hardness-input-box'>
+          <%= render partial: "shared/ash_talk", locals: {talk_content: "どれぐらい大変だった？(「未達成」以外を選んでね)"} %>
+          <% f.label :hardness_grade, "大変さ" %><br />
+          <div class="nes-select">
+            <%= f.collection_select(:hardness_grade, Hardness.all, :id, :name, {}, {}) %>
+          </div>
+        </div>
       </div>
     </div>
     <div class="submit-button-box">
