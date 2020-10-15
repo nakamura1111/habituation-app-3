@@ -23,10 +23,10 @@
     </div>
     <div class="nes-container">
       <%= render partial: "shared/ash_talk", locals: {talk_content: "この目標は達成してる？"} %>
-      <%= f.label :is_achieved, "達成した" %>
-      <%= f.radio_button :is_achieved, true, {id: "radio-true"} %>
-      <%= f.label :is_achieved, "まだ達成してない" %>
-      <%= f.radio_button :is_achieved, false, {id: "radio-false", checked: true} %>
+      <%= f.label :is_achieved_true, "達成した" %>
+      <%= f.radio_button :is_achieved, true %>
+      <%= f.label :is_achieved_false, "まだ達成してない" %>
+      <%= f.radio_button :is_achieved, false, { checked: true} %>
       <div class="hidden" id="small-target-achieved-pull-down">
         <div class='small-target-happiness-input-box'>
           <%= render partial: "shared/ash_talk", locals: {talk_content: "達成した今の気持ちは？(「未達成」以外を選んでね)"} %>

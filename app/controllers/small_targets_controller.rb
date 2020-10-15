@@ -47,9 +47,6 @@ class SmallTargetsController < ApplicationController
 
   # happiness_gradeとhardness_gradeのバリデーション（モデルに移動したほうがいいかな）
   def is_recorded_happiness_and_hardness
-    
-    binding.pry
-    
     return false if @small_target.is_achieved == true && ( @small_target.happiness_grade == 0 || @small_target.hardness_grade == 0 )
     return true
   end
