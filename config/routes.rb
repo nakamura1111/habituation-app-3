@@ -8,8 +8,10 @@ Rails.application.routes.draw do
         put 'update_achieved_status'
       end
     end
+    resources :small_targets, only: %i[new create]
   end
   # 再読み込みが発生した際の処理
   get '/users', to: 'users#retake_registration'
   get '/targets/:target_id/habits', to: 'habits#new'
+  get '/targets/:target_id/small_targets', to: 'small_targets#new'
 end

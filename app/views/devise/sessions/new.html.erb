@@ -1,7 +1,7 @@
 <div class="nes-container with-title main-form">
   <h2 class="title"><%= "ログイン画面" %></h2>
   <%# ログインフォーム %>
-  <%= form_with model: @user, url: user_session_path, class: "input-form" do |f| %>
+  <%= form_with model: @user, url: user_session_path, class: "input-form", local: true do |f| %>
     <%# エラーメッセージ %>
     <% if flash[:notice] != nil %>
     <%= render partial: "shared/ash_talk", locals: {talk_content: flash[:notice]} %>

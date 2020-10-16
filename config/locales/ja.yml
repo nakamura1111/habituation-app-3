@@ -15,7 +15,11 @@ ja:
         difficulty_grade: 難易度
         achieved_or_not_binary: 達成状況
         achieved_days: 達成日数
-        is_active: 
+      small_target:
+        name: 小目標名
+        content: 詳細内容
+        happiness_grade: 達成時の嬉しさ
+        hardness_grade: 達成までの大変さ
   errors:
     messages:
       invalid: の入力を確認してください

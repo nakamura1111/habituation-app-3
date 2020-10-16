@@ -36,6 +36,7 @@ RSpec.configure do |config|
   config.include UserSupport
   config.include TargetSupport
   config.include HabitSupport
+  config.include SmallTargetSupport
   # travel_toメソッドを使用するため https://thr3a.hatenablog.com/entry/20190307/1551892974
   config.include ActiveSupport::Testing::TimeHelpers
 
