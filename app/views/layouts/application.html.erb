@@ -4,8 +4,6 @@
     <title>HabituationApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%# CSS導入 %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%# ドット調のCSSのオープンソース(NES.css)を導入 %>
     <%= stylesheet_link_tag 'https://unpkg.com/nes.css@latest/css/nes.min.css' %>
     <%# NES.cssに美咲フォントの導入 %>
@@ -22,8 +20,9 @@
     </style>   
 <%
 =end%>
-    <%# javascriptファイル導入 %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
   </head>
 
   <body>
