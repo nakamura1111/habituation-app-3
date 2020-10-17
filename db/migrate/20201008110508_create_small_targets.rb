@@ -5,7 +5,7 @@ class CreateSmallTargets < ActiveRecord::Migration[6.0]
       t.text :content
       t.integer :happiness_grade, null: false, default: 0
       t.integer :hardness_grade, null: false, default: 0
-      t.boolean :is_ahieved, null: false, default: false
+      t.boolean :is_achieved, null: false, default: false
       t.references :target, null: false, foreign_key: true
 
       t.timestamps
