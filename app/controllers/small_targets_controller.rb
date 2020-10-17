@@ -9,15 +9,9 @@ class SmallTargetsController < ApplicationController
     # レコード作成
     @small_target = SmallTarget.new(small_target_params)
     # 目標未達成時のデータ設定
-    regist_happiness_and_hardness
-    # 目標達成に対するデータバリデーション
-    unless is_recorded_happiness_and_hardness
-      flash[:error] = "登録失敗..."
-      render :new
-      return
-    end
-    # DB保存とリクエスト
-    if @small_target.save
+    @small_target.regist_happiness_and_hardness
+    # SmallTarget, TargetモデルへのDB保存とリクエスト
+    if create_transaction(@small_target)
       flash[:success] = "登録完了！"
       redirect_to target_path(@target)
     else
@@ -32,22 +26,34 @@ class SmallTargetsController < ApplicationController
     params.require(:small_target).permit(:name, :content, :happiness_grade, :hardness_grade, :is_achieved).merge(target: @target)
   end
 
-  # habitsコントローラにも同様の記述あり
   def current_target
     @target = Target.find(params[:target_id])
   end
 
-  # happiness_gradeとhardness_gradeの加工
-  def regist_happiness_and_hardness
-    if @small_target.is_achieved == false
-      @small_target.happiness_grade = 0
-      @small_target.hardness_grade = 0
-    end
-  end
+  # # happiness_gradeとhardness_gradeの加工
+  # def regist_happiness_and_hardness
+  #   if @small_target.is_achieved == false
+  #     @small_target.happiness_grade = 0
+  #     @small_target.hardness_grade = 0
+  #   end
+  # end
 
-  # happiness_gradeとhardness_gradeのバリデーション（モデルに移動したほうがいいかな）
-  def is_recorded_happiness_and_hardness
-    return false if @small_target.is_achieved == true && ( @small_target.happiness_grade == 0 || @small_target.hardness_grade == 0 )
-    return true
+  # # happiness_gradeとhardness_gradeのバリデーション（モデルに移動したほうがいいかな）
+  # def is_recorded_happiness_and_hardness
+  #   return false if @small_target.is_achieved == true && ( @small_target.happiness_grade == 0 || @small_target.hardness_grade == 0 )
+  #   return true
+  # end
+
+  # 小目標の達成状況と能力値の変動をDBに記録するメソッド
+  def create_transaction(small_target)
+    ActiveRecord::Base.transaction do
+      # 目標達成に対するデータバリデーション
+      return false unless small_target.is_recorded_happiness_and_hardness
+      # 小目標のDB保存
+      small_target.save
+      # 目標の経験値・レベルのDB保存
+      Target.add_point_by_small_target_achieve(small_target)
+      return true
+    end
   end
 end
