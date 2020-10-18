@@ -144,3 +144,63 @@ RSpec.describe '小目標の登録機能', type: :system do
     end
   end
 end
+
+RSpec.describe '小目標の詳細表示機能', type: :system do
+  before do
+    @small_target = FactoryBot.create(:small_target)
+  end
+  context '小目標の詳細表示画面へ遷移できるとき' do
+    it 'ログイン状態で遷移できる' do
+      # ログインした上で、小目標の詳細ページへ遷移する
+      visit_small_target_show_action(@small_target.target, @small_target)
+      # 無事遷移できていることを確認する
+      expect(current_path).to eq(target_small_target_path(@small_target.target, @small_target))
+    end
+  end
+  context '小目標の詳細表示画面へ遷移できないとき' do
+    it '未ログイン状態では遷移できない' do
+      # 小目標の詳細ページへ遷移する
+      visit target_small_target_path(@small_target.target, @small_target)
+      # ログインページであることを確認する
+      expect(current_path).to eq(new_user_session_path)
+    end
+  end
+  context '小目標の詳細表示画面で表示されるもの' do
+    it '達成状態の小目標について、表示すべき全ての情報が全て載っている' do
+      # ログインした上で、小目標の詳細ページへ遷移する
+      visit_small_target_show_action(@small_target.target, @small_target)
+      # 小目標の内容、嬉しさ、大変さ、小目標の詳細内容が表示されていることを確認する
+      small_target_element = find('.small-target-box')
+      # 小目標の内容
+      expect( small_target_element.find('.small-target-name') ).to have_content( @small_target.name )
+      # 嬉しさ
+      expect( small_target_element.find('.small-target-happiness').all('.star').length ).to eq( @small_target.happiness_grade )
+      # 大変さ
+      expect( small_target_element.find('.small-target-hardness').all('.star').length ).to eq( @small_target.hardness_grade )
+      # 小目標の詳細
+      expect( small_target_element.find('.small-target-content-box') ).to have_content( @small_target.content )
+    end
+    it '未達成状態の小目標について、表示すべき全ての情報が全て載っている' do
+      # 小目標を未達成状態にする
+      @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
+      # ログインした上で、小目標の詳細ページへ遷移する
+      visit_small_target_show_action(@small_target.target, @small_target)
+      # 小目標の内容、嬉しさ、大変さ、小目標の詳細内容が表示されていることを確認する
+      small_target_element = find('.small-target-box')
+      # 小目標の内容
+      expect( small_target_element.find('.small-target-name') ).to have_content( @small_target.name )
+      # 嬉しさ
+      expect( small_target_element.find('.small-target-happiness').all('.is-empty').length ).to eq( 3 )
+      # 大変さ
+      expect( small_target_element.find('.small-target-hardness').all('.is-empty').length ).to eq( 3 )
+      # 小目標の詳細
+      expect( small_target_element.find('.small-target-content-box') ).to have_content( @small_target.content )
+    end
+    it '目標詳細ページへのリンクが踏める' do
+      # ログインした上で、小目標の詳細ページへ遷移する
+      visit_small_target_show_action(@small_target.target, @small_target)
+      # 目標詳細へのリンクが踏めることを確認する
+      expect(page).to have_link('目標の詳細', href: target_path(@small_target.target))
+    end
+  end
+end
