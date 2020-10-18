@@ -1,0 +1,55 @@
+<div class="nes-container with-title main">
+  <h2 class="title"><%= "小目標詳細表示" %></h2>
+  <%# 小目標詳細表示の説明 %>
+  <div class="instruction">
+    <%= render partial: "shared/ash_talk", locals: {talk_content: "ここでは小目標の詳細を見ることができるよ！"} %>
+  </div>
+  <%# /小目標詳細表示の説明 %>
+  <%# 小目標詳細 %>
+  <div class="nes-container with-title small-target-box">
+    <h3 class='title small-target-name'><%= @small_target.name %></h3>
+    <%# 嬉しさ度 %>
+    <div class="small-target-happiness">
+      <%= '嬉しさ度：' %>
+      <% if @small_target.happiness_grade == 0 %>
+        <% 3.times do |x| %>
+        <i class="nes-icon is-large star is-empty"></i>
+        <% end %>
+      <% else %>
+        <% @small_target.happiness_grade.times do |x| %>
+        <i class="nes-icon is-large star"></i>
+        <% end %>
+      <% end %>
+    </div>
+    <%# 大変度 %>
+    <div class="small-target-hardness">
+      <%= '大変度：' %>
+      <% if @small_target.hardness_grade == 0 %>
+        <% 3.times do |x| %>
+        <i class="nes-icon is-large star is-empty"></i>
+        <% end %>
+      <% else %>
+        <% @small_target.hardness_grade.times do |i| %>
+        <i class="nes-icon is-large star"></i>
+        <% end %>
+      <% end %>
+    </div>
+    <%# 小目標の内容 %>
+    <div class="nes-container with-title small-target-content-box">
+      <h3 class='title'><%= "内容" %></h3>
+      <%= @small_target.content %>
+    </div>
+  </div>
+  <%# /小目標詳細 %>
+
+  <%# リンク %>
+  <div class="nes-container links">
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
+        <%= link_to "目標の詳細、小目標一覧を見る？", target_path(@target) %>
+      </div>
+    </div>
+  </div>
+  <%# /リンク %>
+</div>

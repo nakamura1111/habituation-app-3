@@ -21,7 +21,7 @@ class SmallTargetsController < ApplicationController
   end
 
   def show
-    
+    @small_target = SmallTarget.find(params[:id])
   end
 
   private

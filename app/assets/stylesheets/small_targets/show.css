@@ -1,0 +1,35 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px;
+  background-color: lightgreen;
+}
+
+/*  小目標 */
+.small-target-box{
+  width: 100%;
+  margin: 10px;
+  background-color: white;
+}
+.small-target-happiness{
+  margin: 10px;
+}
+.small-target-hardness{
+  margin: 10px;
+}
+.small-target-content-box{
+  margin: 10px;
+}
+/* /小目標 */
+
+/* リンク */
+.message-lists{
+  width: 100%;
+  margin: 10px;
+  background-color: white;
+}
+.message-list{
+  display: flex;
+}
+/* /リンク */
