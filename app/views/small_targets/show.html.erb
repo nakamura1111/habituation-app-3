@@ -8,32 +8,8 @@
   <%# 小目標詳細 %>
   <div class="nes-container with-title small-target-box">
     <h3 class='title small-target-name'><%= @small_target.name %></h3>
-    <%# 嬉しさ度 %>
-    <div class="small-target-happiness">
-      <%= '嬉しさ度：' %>
-      <% if @small_target.happiness_grade == 0 %>
-        <% 3.times do |x| %>
-        <i class="nes-icon is-large star is-empty"></i>
-        <% end %>
-      <% else %>
-        <% @small_target.happiness_grade.times do |x| %>
-        <i class="nes-icon is-large star"></i>
-        <% end %>
-      <% end %>
-    </div>
-    <%# 大変度 %>
-    <div class="small-target-hardness">
-      <%= '大変度：' %>
-      <% if @small_target.hardness_grade == 0 %>
-        <% 3.times do |x| %>
-        <i class="nes-icon is-large star is-empty"></i>
-        <% end %>
-      <% else %>
-        <% @small_target.hardness_grade.times do |i| %>
-        <i class="nes-icon is-large star"></i>
-        <% end %>
-      <% end %>
-    </div>
+    <%# 嬉しさと大変さ %>
+    <%= render partial: "shared/small_target_desc", locals: {small_target: @small_target} %>
     <%# 小目標の内容 %>
     <div class="nes-container with-title small-target-content-box">
       <h3 class='title'><%= "内容" %></h3>

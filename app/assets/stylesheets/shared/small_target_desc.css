@@ -1,0 +1,17 @@
+.small-target-happiness-hardness{
+  margin: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+.small-target-happiness{
+  margin: 10px;
+}
+.happiness-grade{
+  display: flex;
+}
+.small-target-hardness{
+  margin: 10px;
+}
+.hardness-grade{
+  display: flex;
+}

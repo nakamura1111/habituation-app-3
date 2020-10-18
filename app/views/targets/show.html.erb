@@ -70,6 +70,7 @@
       <h3 class='title'>
         <%= link_to small_target.name, target_small_target_path(@target, small_target), method: :get, id: "small-target-show-#{small_target.id}" %>
       </h3>
+      <%= render partial: "shared/small_target_desc", locals: {small_target: small_target} %>
     </div>
     <% end %>
   </div>
