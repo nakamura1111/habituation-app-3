@@ -1,5 +1,5 @@
 class SmallTargetsController < ApplicationController
-  before_action :current_target, only: %i[new create]
+  before_action :current_target, only: %i[new create show]
 
   def new
     @small_target = SmallTarget.new
@@ -18,6 +18,10 @@ class SmallTargetsController < ApplicationController
       flash[:error] = "登録失敗..."
       render :new
     end
+  end
+
+  def show
+    
   end
 
   private
