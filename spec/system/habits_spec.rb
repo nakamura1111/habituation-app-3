@@ -49,6 +49,7 @@ RSpec.describe '習慣の達成チェック機能', type: :system do
     @habit = FactoryBot.create(:habit)
     @target = @habit.target
     @prev_point = 9
+    @next_point = @prev_point + @habit.difficulty_grade + 1
     @target.update(point: @prev_point)
   end
   context '習慣達成の記録ができるとき' do
@@ -66,9 +67,9 @@ RSpec.describe '習慣の達成チェック機能', type: :system do
       expect(all('tr.achieved-status-row th')[6]).to have_content('〇')
       # レベル・経験値がDBとページに反映されていることを確認する
       @target.reload
-      expect(@target.point).to eq(@prev_point + @habit.difficulty_grade + 1) # point
-      expect(find('.target-level').text).to eq("Lv. #{@target.level} - Level up!")   # level
-      expect(find('.exp-bar')[:value].to_i).to eq(@target.exp)                       # exp
+      expect(@target.point).to eq(@next_point)                               # point
+      expect(find('.target-level').text).to eq("Lv. 2 - Level up!")          # level
+      expect(find('.exp-bar')[:value].to_i).to eq(@habit.difficulty_grade)   # exp
     end
     it '習慣の詳細表示ページにて達成状況のクリックすると登録される' do
       # ログインして、習慣の詳細ページに遷移

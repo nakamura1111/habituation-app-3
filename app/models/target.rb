@@ -26,11 +26,21 @@ class Target < ApplicationRecord
   end
 
   # 習慣を達成することで得られるポイントを加算し、レベル・経験値を算出し直すメソッド
-  def self.add_target_point(habit, is_add)
+  def self.add_point_by_habit_achieve(habit, is_add)
     if is_add
       point = habit.target.point + habit.difficulty_grade + 1
       level, exp = Target.level_and_exp_calc(point)
       habit.target.update(point: point, level: level, exp: exp)
+    end
+    true
+  end
+
+  # 小目標を達成することで得られるポイントを加算し、レベル・経験値を算出し直すメソッド
+  def self.add_point_by_small_target_achieve(small_target)
+    if small_target.is_achieved
+      point = small_target.target.point + small_target.happiness_grade + small_target.hardness_grade
+      level, exp = Target.level_and_exp_calc(point)
+      small_target.target.update(point: point, level: level, exp: exp)
     end
     true
   end
