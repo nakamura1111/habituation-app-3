@@ -59,8 +59,8 @@ class HabitsController < ApplicationController
   def update_transaction(habit)
     ActiveRecord::Base.transaction do
       is_add = habit.achieved_or_not_binary & 1 # Targetのpointが増えるかどうかを判定
-      habit.update(achieved_or_not_binary: habit.achieved_or_not_binary | 1, achieved_days: habit.achieved_days + 1)
-      Target.add_target_point(habit, is_add)
+      raise ActiveRecord::Rollback unless habit.update(achieved_or_not_binary: habit.achieved_or_not_binary | 1, achieved_days: habit.achieved_days + 1)
+      raise ActiveRecord::Rollback unless Target.add_point_by_habit_achieve(habit, is_add)
       return true
     end
   end

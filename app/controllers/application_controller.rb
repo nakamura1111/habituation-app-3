@@ -1,7 +1,7 @@
 # 各アクションの実行前に行う共通処理を記載する
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :basic_auth
+  # before_action :basic_auth
   before_action :move_to_login
 
   private

@@ -48,11 +48,11 @@ class SmallTargetsController < ApplicationController
   def create_transaction(small_target)
     ActiveRecord::Base.transaction do
       # 目標達成に対するデータバリデーション
-      return false unless small_target.is_recorded_happiness_and_hardness
+      raise ActiveRecord::Rollback unless small_target.is_recorded_happiness_and_hardness
       # 小目標のDB保存
-      small_target.save
+      raise ActiveRecord::Rollback unless small_target.save
       # 目標の経験値・レベルのDB保存
-      Target.add_point_by_small_target_achieve(small_target)
+      raise ActiveRecord::Rollback unless Target.add_point_by_small_target_achieve(small_target)
       return true
     end
   end
