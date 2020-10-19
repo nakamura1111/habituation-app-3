@@ -1,0 +1,32 @@
+<div class="small-target-happiness-hardness">
+  <%# 嬉しさ度 %>
+  <div class="nes-container with-title small-target-happiness">
+    <h3 class="title"><%= "嬉しさ度" %></h3>
+    <div class="happiness-grade">
+      <% if small_target.happiness_grade == 0 %>
+        <% 3.times do |x| %>
+        <i class="nes-icon star is-empty"></i>
+        <% end %>
+      <% else %>
+        <% small_target.happiness_grade.times do |x| %>
+        <i class="nes-icon star"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <%# 大変度 %>
+  <div class="nes-container with-title small-target-hardness">
+    <h3 class="title"><%= '大変だった度' %></h3>
+    <div class="hardness-grade">
+      <% if small_target.hardness_grade == 0 %>
+        <% 3.times do |x| %>
+        <i class="nes-icon star is-empty"></i>
+        <% end %>
+      <% else %>
+        <% small_target.hardness_grade.times do |i| %>
+        <i class="nes-icon star"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

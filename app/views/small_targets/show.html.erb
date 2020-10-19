@@ -1,0 +1,31 @@
+<div class="nes-container with-title main">
+  <h2 class="title"><%= "小目標詳細表示" %></h2>
+  <%# 小目標詳細表示の説明 %>
+  <div class="instruction">
+    <%= render partial: "shared/ash_talk", locals: {talk_content: "ここでは小目標の詳細を見ることができるよ！"} %>
+  </div>
+  <%# /小目標詳細表示の説明 %>
+  <%# 小目標詳細 %>
+  <div class="nes-container with-title small-target-box">
+    <h3 class='title small-target-name'><%= @small_target.name %></h3>
+    <%# 嬉しさと大変さ %>
+    <%= render partial: "shared/small_target_desc", locals: {small_target: @small_target} %>
+    <%# 小目標の内容 %>
+    <div class="nes-container with-title small-target-content-box">
+      <h3 class='title'><%= "内容" %></h3>
+      <%= @small_target.content %>
+    </div>
+  </div>
+  <%# /小目標詳細 %>
+
+  <%# リンク %>
+  <div class="nes-container links">
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
+        <%= link_to "目標の詳細、小目標一覧を見る？", target_path(@target) %>
+      </div>
+    </div>
+  </div>
+  <%# /リンク %>
+</div>

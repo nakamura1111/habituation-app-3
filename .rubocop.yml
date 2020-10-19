@@ -12,7 +12,7 @@ AllCops:
 
 # 1行あたりの文字数をチェックする
 Layout/LineLength:
- Max: 160
+ Max: 170
 # 下記ファイルはチェックの対象から外す
  Exclude:
    - "Rakefile"

@@ -68,8 +68,9 @@
     <% @target.small_targets.each_with_index do |small_target, i| %>
     <div class="nes-container with-title small-target-box">
       <h3 class='title'>
-        <%= link_to small_target.name, "#", method: :get, id: "small-target-show-#{small_target.id}" %>
+        <%= link_to small_target.name, target_small_target_path(@target, small_target), method: :get, id: "small-target-show-#{small_target.id}" %>
       </h3>
+      <%= render partial: "shared/small_target_desc", locals: {small_target: small_target} %>
     </div>
     <% end %>
   </div>

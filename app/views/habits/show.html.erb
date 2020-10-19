@@ -9,13 +9,18 @@
   <div class="nes-container with-title habit-box">
     <h3 class='title habit-name'><%= @habit.name %></h3>
     <%# 習慣達成率 %>
-    <% if @achieved_ratio >= 4.0/7*100 %>
-    <p class="habit-achieved-ratio nes-text is-success"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
-    <% elsif @achieved_ratio >= 1.0/7*100 %>
-    <p class="habit-achieved-ratio nes-text is-warning"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
-    <% else %>
-    <p class="habit-achieved-ratio nes-text is-error"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
-    <% end %>
+    <div class="habit-achieved-ratio-box">
+      <div class="achieved-ratio-string">
+        <%= "達成率：" %>
+      </div>
+      <% if @achieved_ratio >= 4.0/7*100 %>
+      <progress class="nes-progress is-success achieved-ratio-bar" id="achieved-ratio-bar" value=<%= @achieved_ratio %> max="100"></progress>
+      <% elsif @achieved_ratio >= 1.0/7*100 %>
+      <progress class="nes-progress is-warning achieved-ratio-bar" id="achieved-ratio-bar" value=<%= @achieved_ratio %> max="100"></progress>
+      <% else %>
+      <progress class="nes-progress is-error achieved-ratio-bar" id="achieved-ratio-bar" value=<%= @achieved_ratio %> max="100"></progress>
+      <% end %>
+    </div>
     <%# 難易度、達成状況 %>
     <%= render partial: "shared/habit_desc", locals: {habit: @habit, achieved_status: @achieved_status} %>
     <%# 習慣の内容 %>

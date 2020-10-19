@@ -6,27 +6,16 @@
   background-color: lightgreen;
 }
 
-/* 習慣一覧 */
-.habit-box{
+/*  小目標 */
+.small-target-box{
   width: 100%;
   margin: 10px;
   background-color: white;
 }
-.habit-achieved-ratio-box{
-  display: flex;
-  align-items: center;
-}
-.achieved-ratio-string{
+.small-target-content-box{
   margin: 10px;
 }
-.achieved-ratio-bar{
-  width: 50%;
-  margin: 10px;
-}
-.habit-content-box{
-  margin: 10px;
-}
-/* /習慣一覧 */
+/* /小目標 */
 
 /* リンク */
 .message-lists{
@@ -38,4 +27,3 @@
   display: flex;
 }
 /* /リンク */
-
