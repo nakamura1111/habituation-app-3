@@ -12,6 +12,17 @@
   margin: 10px;
   background-color: white;
 }
+.habit-achieved-ratio-box{
+  display: flex;
+  align-items: center;
+}
+.achieved-ratio-string{
+  margin: 10px;
+}
+.achieved-ratio-bar{
+  width: 50%;
+  margin: 10px;
+}
 .habit-content-box{
   margin: 10px;
 }

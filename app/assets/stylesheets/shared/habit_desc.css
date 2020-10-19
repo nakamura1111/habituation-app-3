@@ -1,0 +1,14 @@
+.habit-desc{
+  display: flex;
+  justify-content: space-around;
+  margin: 10px;
+}
+.habit-difficulty{
+  margin: 10px;
+}
+.difficulty-grade{
+  display: flex;
+}
+.habit-achieved-status-table{
+
+}
