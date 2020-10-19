@@ -159,8 +159,8 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       expect(habit_element.find('.habit-content-box')).to have_content(@habit.content)
     end
     it '達成率の違いで達成率のバーの色が異なる' do
-    #1 達成率100%
-      p "100%の場合"
+      # 1 達成率100%
+      p '100%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 1.0
       db_value_create_for_achieved_ratio(achieved_ratio)
@@ -170,8 +170,8 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       habit_element = find('.habit-box')
       p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-success')
-    #2 達成率60%
-      p "60%の場合"
+      # 2 達成率60%
+      p '60%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.6
       db_value_create_for_achieved_ratio(achieved_ratio)
@@ -180,8 +180,8 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       # 達成率のバーの色を確かめる
       p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-success')
-    #3 達成率50%
-      p "50%の場合"
+      # 3 達成率50%
+      p '50%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.5
       db_value_create_for_achieved_ratio(achieved_ratio)
@@ -190,8 +190,8 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       # 達成率のバーの色を確かめる
       p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-warning')
-    #4 達成率20%
-      p "20%の場合"
+      # 4 達成率20%
+      p '20%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.2
       db_value_create_for_achieved_ratio(achieved_ratio)
@@ -200,8 +200,8 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       # 達成率のバーの色を確かめる
       p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-warning')
-    #5 達成率10%
-      p "10%の場合"
+      # 5 達成率10%
+      p '10%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.1
       db_value_create_for_achieved_ratio(achieved_ratio)
@@ -210,8 +210,8 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       # 達成率のバーの色を確かめる
       p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-error')
-    #6 達成率0%
-      p "0%の場合"
+      # 6 達成率0%
+      p '0%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.0
       db_value_create_for_achieved_ratio(achieved_ratio)
