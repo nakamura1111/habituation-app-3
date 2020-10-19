@@ -124,9 +124,9 @@ RSpec.describe '目標の詳細表示機能', type: :system do
       # 鍛錬内容、難易度、達成状況が表示されていることを確認する
       # 鍛錬内容
       habit_element = find('.habit-box')
-      expect(habit_element.find('h3.title')).to have_content(@habit.name)
+      expect(habit_element).to have_link(@habit.name)
       # 難易度
-      expect(habit_element.text).to have_content("難易度：#{Difficulty.find(@habit.difficulty_grade).name}")
+      expect(habit_element.find('.habit-difficulty').all('.star').length).to eq(@habit.difficulty_grade + 1)
       # 達成状況
       display_achieved_status(habit_element)
     end
