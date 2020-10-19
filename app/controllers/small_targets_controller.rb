@@ -9,13 +9,13 @@ class SmallTargetsController < ApplicationController
     # レコード作成
     @small_target = SmallTarget.new(small_target_params)
     # 目標未達成時のデータ設定
-    @small_target.regist_happiness_and_hardness
+    @small_target.mod_happiness_and_hardness
     # SmallTarget, TargetモデルへのDB保存とリクエスト
     if create_transaction(@small_target)
-      flash[:success] = "登録完了！"
+      flash[:success] = '登録完了！'
       redirect_to target_path(@target)
     else
-      flash[:error] = "登録失敗..."
+      flash[:error] = '登録失敗...'
       render :new
     end
   end
@@ -35,7 +35,7 @@ class SmallTargetsController < ApplicationController
   end
 
   # # happiness_gradeとhardness_gradeの加工
-  # def regist_happiness_and_hardness
+  # def mod_happiness_and_hardness
   #   if @small_target.is_achieved == false
   #     @small_target.happiness_grade = 0
   #     @small_target.hardness_grade = 0
@@ -43,7 +43,7 @@ class SmallTargetsController < ApplicationController
   # end
 
   # # happiness_gradeとhardness_gradeのバリデーション（モデルに移動したほうがいいかな）
-  # def is_recorded_happiness_and_hardness
+  # def recorded_happiness_and_hardness?
   #   return false if @small_target.is_achieved == true && ( @small_target.happiness_grade == 0 || @small_target.hardness_grade == 0 )
   #   return true
   # end
@@ -52,11 +52,12 @@ class SmallTargetsController < ApplicationController
   def create_transaction(small_target)
     ActiveRecord::Base.transaction do
       # 目標達成に対するデータバリデーション
-      raise ActiveRecord::Rollback unless small_target.is_recorded_happiness_and_hardness
+      raise ActiveRecord::Rollback unless small_target.recorded_happiness_and_hardness?
       # 小目標のDB保存
       raise ActiveRecord::Rollback unless small_target.save
       # 目標の経験値・レベルのDB保存
       raise ActiveRecord::Rollback unless Target.add_point_by_small_target_achieve(small_target)
+
       return true
     end
   end

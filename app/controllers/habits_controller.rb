@@ -46,6 +46,7 @@ class HabitsController < ApplicationController
   def habit_params
     params.require(:habit).permit(:name, :content, :difficulty_grade).merge(target: @target, achieved_or_not_binary: 0, achieved_days: 0, is_active: true)
   end
+
   # small_targetsコントローラにも同様の記述あり
   def current_target
     @target = Target.find(params[:target_id])
@@ -61,6 +62,7 @@ class HabitsController < ApplicationController
       is_add = habit.achieved_or_not_binary & 1 # Targetのpointが増えるかどうかを判定
       raise ActiveRecord::Rollback unless habit.update(achieved_or_not_binary: habit.achieved_or_not_binary | 1, achieved_days: habit.achieved_days + 1)
       raise ActiveRecord::Rollback unless Target.add_point_by_habit_achieve(habit, is_add)
+
       return true
     end
   end

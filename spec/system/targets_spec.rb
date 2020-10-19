@@ -138,11 +138,11 @@ RSpec.describe '目標の詳細表示機能', type: :system do
       # 小目標の内容、嬉しさ、大変さが表示されていることを確認する
       small_target_element = find('.small-target-box')
       # 小目標の内容
-      expect( small_target_element.find('.small-target-name') ).to have_content( @small_target.name )
+      expect(small_target_element.find('.small-target-name')).to have_content(@small_target.name)
       # 嬉しさ
-      expect( small_target_element.find('.small-target-happiness').all('.is-empty').length ).to eq( 3 )
+      expect(small_target_element.find('.small-target-happiness').all('.is-empty').length).to eq(3)
       # 大変さ
-      expect( small_target_element.find('.small-target-hardness').all('.is-empty').length ).to eq( 3 )
+      expect(small_target_element.find('.small-target-hardness').all('.is-empty').length).to eq(3)
     end
     it '達成済みの小目標について、一部情報が載っている' do
       # ログインした上で、小目標の詳細ページへ遷移する
@@ -150,11 +150,11 @@ RSpec.describe '目標の詳細表示機能', type: :system do
       # 小目標の内容、嬉しさ、大変さ、小目標の詳細内容が表示されていることを確認する
       small_target_element = find('.small-target-box')
       # 小目標の内容
-      expect( small_target_element.find('.small-target-name') ).to have_content( @small_target.name )
+      expect(small_target_element.find('.small-target-name')).to have_content(@small_target.name)
       # 嬉しさ
-      expect( small_target_element.find('.small-target-happiness').all('.star').length ).to eq( @small_target.happiness_grade )
+      expect(small_target_element.find('.small-target-happiness').all('.star').length).to eq(@small_target.happiness_grade)
       # 大変さ
-      expect( small_target_element.find('.small-target-hardness').all('.star').length ).to eq( @small_target.hardness_grade )
+      expect(small_target_element.find('.small-target-hardness').all('.star').length).to eq(@small_target.hardness_grade)
     end
     it '習慣登録と目標一覧のリンクが踏める' do
       # ログインした上で、目標の詳細ページへ遷移する

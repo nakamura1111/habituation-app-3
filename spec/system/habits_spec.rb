@@ -68,7 +68,7 @@ RSpec.describe '習慣の達成チェック機能', type: :system do
       # レベル・経験値がDBとページに反映されていることを確認する
       @target.reload
       expect(@target.point).to eq(@next_point)                               # point
-      expect(find('.target-level').text).to eq("Lv. 2 - Level up!")          # level
+      expect(find('.target-level').text).to eq('Lv. 2 - Level up!')          # level
       expect(find('.exp-bar')[:value].to_i).to eq(@habit.difficulty_grade)   # exp
     end
     it '習慣の詳細表示ページにて達成状況のクリックすると登録される' do
@@ -141,7 +141,7 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
     it '習慣について、表示すべき全ての情報が全て載っている' do
       # 達成状況、達成率の確認のため0以外の数値を入れておく
       days_of_habit_practice = 11
-      time_of_habit_create = Time.now - ( (days_of_habit_practice-1) * 24 * 60 * 60 )
+      time_of_habit_create = Time.now - ((days_of_habit_practice - 1) * 24 * 60 * 60)
       @habit.update(achieved_or_not_binary: Faker::Number.between(from: 1, to: (1 << 7) - 1), achieved_days: days_of_habit_practice, created_at: time_of_habit_create)
       # ログインした上で、習慣の詳細ページへ遷移する
       visit_habit_show_action(@habit.target, @habit)
