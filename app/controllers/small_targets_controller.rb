@@ -1,5 +1,6 @@
 class SmallTargetsController < ApplicationController
-  before_action :current_target, only: %i[new create show]
+  before_action :current_target, only: %i[new create show edit update]
+  before_action :current_small_target, only: %i[show edit update]
 
   def new
     @small_target = SmallTarget.new
@@ -21,9 +22,24 @@ class SmallTargetsController < ApplicationController
   end
 
   def show
-    @small_target = SmallTarget.find(params[:id])
+    
   end
 
+  def edit
+    
+  end
+
+  def update
+      if @small_target.update_attributes(small_target_params)
+        flash[:success] = "更新完了"
+        redirect_to @small_target
+      else
+        flash[:error] = "更新失敗..."
+        render :edit
+      end
+  end
+  
+  
   private
 
   def small_target_params
@@ -32,6 +48,10 @@ class SmallTargetsController < ApplicationController
 
   def current_target
     @target = Target.find(params[:target_id])
+  end
+
+  def current_small_target
+    @small_target = SmallTarget.find(params[:id])
   end
 
   # # happiness_gradeとhardness_gradeの加工
