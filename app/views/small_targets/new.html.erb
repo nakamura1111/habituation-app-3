@@ -7,7 +7,50 @@
   <%# /本ページの説明 %>
   <%# 小目標入力フォーム %>
   <%= form_with model: @small_target, url: target_small_targets_path(@target), method: :post, local: true, class: "input-form" do |f| %>
-    <%= render partial: "shared/small_target_form", locals: {f: f} %>
+    <% if flash[:error] != nil %>
+    <%= render partial: "shared/ash_talk", locals: {talk_content: flash[:error]} %>
+    <%= render "shared/error_messages", model: f.object %><br />
+    <% end %>
+    <div class="small-target-name-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "小目標・良くなったことを入力しよう！"} %>
+      <% f.label :name, "小目標の内容" %><br />
+      <%= f.text_field :name, class: "nes-input", placeholder: "まずは1kg減らすよ!、お出かけをしても体の疲れを感じにくくなった！、など" %>
+    </div>
+    <div class="small-target-content-input-box">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "詳しく書いてもいいよ！"} %>
+      <% f.label :content, "小目標の詳細な内容" %><br />
+      <%= f.text_area :content, class: "nes-textarea", placeholder: "記録に残しておくと後で達成した時のことを思い出しやすくなるよ！" %>
+    </div>
+    <div class="nes-container">
+      <%= render partial: "shared/ash_talk", locals: {talk_content: "この目標は達成してる？"} %>
+      <%= f.label :is_achieved_true, "達成した" %>
+      <%= f.radio_button :is_achieved, true %>
+      <%= f.label :is_achieved_false, "まだ達成してない" %>
+      <%= f.radio_button :is_achieved, false %>
+      <% if f.object.is_achieved == true %>
+      <div class="hidden" id="small-target-achieved-pull-down" style='display:block;'>
+      <% else %>
+      <div class="hidden" id="small-target-achieved-pull-down">
+      <% end %>
+        <div class='small-target-happiness-input-box'>
+          <%= render partial: "shared/ash_talk", locals: {talk_content: "達成した今の気持ちは？(「未達成」以外を選んでね)"} %>
+          <% f.label :happiness_grade, "嬉しさ" %><br />
+          <div class="nes-select">
+            <%= f.collection_select(:happiness_grade, Happiness.all, :id, :name, {}, {}) %>
+          </div>
+        </div>
+        <div class='small-target-hardness-input-box'>
+          <%= render partial: "shared/ash_talk", locals: {talk_content: "どれぐらい大変だった？(「未達成」以外を選んでね)"} %>
+          <% f.label :hardness_grade, "大変さ" %><br />
+          <div class="nes-select">
+            <%= f.collection_select(:hardness_grade, Hardness.all, :id, :name, {}, {}) %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="submit-button-box">
+      <%= f.submit "登録" %>
+    </div>
   <% end %>
   <%# /小目標入力フォーム %>
   <div class="message-list">

@@ -17,5 +17,25 @@
   width: 100%;
   margin: 40px 0;
 }
-
+.small-target-name-input-box{
+  width: 100%;
+}
+.small-target-content-input-box{
+  width: 100%;
+  margin-top: 40px;
+}
+.hidden{
+  display: none;
+}
+.small-target-happiness-input-box{
+  width: 100%;
+  margin-top: 40px;
+}
+.small-target-hardness-input-box{
+  width: 100%;
+  margin-top: 40px;
+}
+.submit-button-box{
+  margin: 20px 0;
+}
 /* /小目標入力フォーム */

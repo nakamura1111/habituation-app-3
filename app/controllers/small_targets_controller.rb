@@ -7,10 +7,14 @@ class SmallTargetsController < ApplicationController
   end
 
   def create
+    if params[:small_target][:is_achieved] == false
+      params[:small_target][:happiness_grade] = 0
+      params[:small_target][:hardness_grade] = 0
+    end
     # レコード作成
     @small_target = SmallTarget.new(small_target_params)
-    # 目標未達成時のデータ設定
-    @small_target.mod_happiness_and_hardness
+    # # 目標未達成時のデータ設定
+    # @small_target.mod_happiness_and_hardness
     # SmallTarget, TargetモデルへのDB保存とリクエスト
     if create_transaction(@small_target)
       flash[:success] = '登録完了！'
@@ -30,13 +34,25 @@ class SmallTargetsController < ApplicationController
   end
 
   def update
-      if @small_target.update_attributes(small_target_params)
-        flash[:success] = "更新完了"
-        redirect_to target_small_target_path(@target, @small_target)
-      else
-        flash[:error] = "更新失敗..."
-        render :edit
-      end
+    params_tmp = small_target_params
+    if params_tmp[:is_achieved] == nil
+      params_tmp[:is_achieved] = true
+      params_tmp[:happiness_grade] = @small_target.happiness_grade
+      params_tmp[:hardness_grade] = @small_target.hardness_grade
+    elsif params_tmp[:is_achieved] == "false"
+      params_tmp[:happiness_grade] = 0
+      params_tmp[:hardness_grade] = 0
+    end
+    @small_target_update = SmallTarget.new(params_tmp)
+    # SmallTarget, TargetモデルへのDB保存とリクエスト
+    if update_transaction(@small_target, @small_target_update)
+      flash[:success] = '登録完了！'
+      redirect_to target_small_target_path(@target, @small_target), action: :show
+    else
+      flash[:error] = '登録失敗...'
+      current_small_target
+      render :edit
+    end
   end
   
   
@@ -44,6 +60,10 @@ class SmallTargetsController < ApplicationController
 
   def small_target_params
     params.require(:small_target).permit(:name, :content, :happiness_grade, :hardness_grade, :is_achieved).merge(target: @target)
+  end
+
+  def small_target_params_update(small_target)
+    {name: small_target.name, content: small_target.content, happiness_grade: small_target.happiness_grade, hardness_grade: small_target.hardness_grade, is_achieved: small_target.is_achieved, target: small_target.target}
   end
 
   def current_target
@@ -77,6 +97,27 @@ class SmallTargetsController < ApplicationController
       raise ActiveRecord::Rollback unless small_target.save
       # 目標の経験値・レベルのDB保存
       raise ActiveRecord::Rollback unless Target.add_point_by_small_target_achieve(small_target)
+
+      return true
+    end
+  end
+
+  # 小目標の達成状況と能力値の変動を更新するメソッド
+  def update_transaction(small_target, small_target_update)
+    ActiveRecord::Base.transaction do
+      # 未達成への更新は不可
+      raise ActiveRecord::Rollback if small_target.is_achieved == true && small_target_update.is_achieved == false
+      # 目標達成に対するデータバリデーション
+      raise ActiveRecord::Rollback unless small_target_update.recorded_happiness_and_hardness?
+      if small_target.is_achieved == false && small_target_update.is_achieved == true
+        # 小目標のDB保存
+        raise ActiveRecord::Rollback unless small_target.update(small_target_params_update(small_target_update))
+        # 目標の経験値・レベルのDB保存
+        raise ActiveRecord::Rollback unless Target.add_point_by_small_target_achieve(small_target_update)
+      else
+        # 小目標のDB保存
+        raise ActiveRecord::Rollback unless small_target.update(small_target_params_update(small_target_update))
+      end
 
       return true
     end
