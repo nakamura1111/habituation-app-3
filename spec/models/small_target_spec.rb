@@ -65,6 +65,38 @@ RSpec.describe SmallTarget, type: :model do
         expect(@small_target.errors.full_messages).to include('Is achievedは一覧にありません')
       end
     end
+    context 'is_achieved が true かつ happiness_grade や hardness_grade が登録できないとき' do
+      it 'happiness_grade が 0 のとき、登録できない' do
+        @small_target.is_achieved = true
+        @small_target.happiness_grade = 0
+        @small_target.hardness_grade = 2
+        @small_target.valid?
+        expect(@small_target.errors.full_messages).to include('達成時の嬉しさの入力を確認してください')
+      end
+      it 'hardness_grade が 0 のとき、登録できない' do
+        @small_target.is_achieved = true
+        @small_target.happiness_grade = 3
+        @small_target.hardness_grade = 0
+        @small_target.valid?
+        expect(@small_target.errors.full_messages).to include('達成までの大変さの入力を確認してください')
+      end
+    end
+    context 'is_achieved が false かつ happiness_grade や hardness_grade が登録できないとき' do
+      it 'happiness_grade が 0 でないとき、登録できない' do
+        @small_target.is_achieved = false
+        @small_target.happiness_grade = 2
+        @small_target.hardness_grade = 0
+        @small_target.valid?
+        expect(@small_target.errors.full_messages).to include('達成時の嬉しさは0にしてください')
+      end
+      it 'hardness_grade が 0 でないとき、登録できない' do
+        @small_target.is_achieved = false
+        @small_target.happiness_grade = 0
+        @small_target.hardness_grade = 3
+        @small_target.valid?
+        expect(@small_target.errors.full_messages).to include('達成までの大変さは0にしてください')
+      end
+    end
     context '目標(Targetモデル)のidが登録できないとき' do
       it 'Targetが紐づいていないと登録できない' do
         @small_target.target = nil
@@ -78,20 +110,33 @@ RSpec.describe SmallTarget, type: :model do
         expect(@small_target).to be_valid
       end
       it '達成済みか否かの判断フラグ(is_achieved)が true か false なら登録できる' do
-        @small_target.is_achieved = true
+        # true
         expect(@small_target).to be_valid
+        # false
         @small_target.is_achieved = false
+        @small_target.happiness_grade = 0
+        @small_target.hardness_grade = 0
         expect(@small_target).to be_valid
       end
       it '達成済みか否かの判断フラグ(is_achieved)が1以上の数値ならtrueとして, 0ならばfalseとして登録できる' do
-        @small_target.is_achieved = 0
-        expect(@small_target).to be_valid
-        expect(@small_target.is_achieved).to eq(false)
+        # true
         @small_target.is_achieved = Faker::Number.number(digits: 3)
         expect(@small_target).to be_valid
         expect(@small_target.is_achieved).to eq(true)
+        # false
+        @small_target.is_achieved = 0
+        @small_target.happiness_grade = 0
+        @small_target.hardness_grade = 0
+        expect(@small_target).to be_valid
+        expect(@small_target.is_achieved).to eq(false)
       end
-      it '正常に入力していれば登録できる' do
+      it '正常に入力していれば登録できる（未達成状況）' do
+        @small_target.is_achieved = false
+        @small_target.happiness_grade = 0
+        @small_target.hardness_grade = 0
+        expect(@small_target).to be_valid
+      end
+      it '正常に入力していれば登録できる（達成状況）' do
         expect(@small_target).to be_valid
       end
     end

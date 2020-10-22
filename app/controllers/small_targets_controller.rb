@@ -7,7 +7,7 @@ class SmallTargetsController < ApplicationController
   end
 
   def create
-    if params[:small_target][:is_achieved] == false
+    if params[:small_target][:is_achieved] == "false"
       params[:small_target][:happiness_grade] = 0
       params[:small_target][:hardness_grade] = 0
     end
