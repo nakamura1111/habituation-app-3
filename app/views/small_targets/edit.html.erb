@@ -1,0 +1,14 @@
+<div class="nes-container with-title main-form">
+  <h2 class="title"><%= "小目標の更新" %></h2>
+  <%# 小目標入力フォーム %>
+  <%= form_with model: @small_target, url: target_small_target_path(@target, @small_target), method: :put, local: true, class: "input-form" do |f| %>
+    <%= render partial: "shared/small_target_form", locals: {f: f} %>
+  <% end %>
+  <%# /小目標入力フォーム %>
+  <div class="message-list">
+    <i class="nes-ash"></i>
+    <div class="nes-balloon from-left">
+      <%= link_to "小目標の表示画面に戻る？", target_path(@target) %>
+    </div>
+  </div>
+</div>

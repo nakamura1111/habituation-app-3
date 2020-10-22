@@ -32,7 +32,7 @@ class SmallTargetsController < ApplicationController
   def update
       if @small_target.update_attributes(small_target_params)
         flash[:success] = "更新完了"
-        redirect_to @small_target
+        redirect_to target_small_target_path(@target, @small_target)
       else
         flash[:error] = "更新失敗..."
         render :edit
