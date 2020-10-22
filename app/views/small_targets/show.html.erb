@@ -26,6 +26,12 @@
         <%= link_to "目標の詳細、小目標一覧を見る？", target_path(@target) %>
       </div>
     </div>
+    <div class="message-list">
+      <i class="nes-ash"></i>
+      <div class="nes-balloon from-left">
+        <%= link_to "編集する？", edit_target_small_target_path(@target, @small_target) %>
+      </div>
+    </div>
   </div>
   <%# /リンク %>
 </div>
