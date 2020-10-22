@@ -205,7 +205,6 @@ RSpec.describe '小目標の詳細表示機能', type: :system do
   end
 end
 
-
 RSpec.describe '小目標の編集機能', type: :system do
   before(:each) do
     @small_target = FactoryBot.create(:small_target)
@@ -218,17 +217,17 @@ RSpec.describe '小目標の編集機能', type: :system do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
       visit_small_target_edit_action(@target, @small_target)
       # 小目標の編集フォームに入力する
-      fill_in 'small_target_name', with: "編集後"
-      fill_in 'small_target_content', with: "編集後"
+      fill_in 'small_target_name', with: '編集後'
+      fill_in 'small_target_content', with: '編集後'
       # 達成状況選択用のラヂオボタンがあることを確認する
-      expect( all('input[name="small_target[is_achieved]"]').length ).to eq(2)
+      expect(all('input[name="small_target[is_achieved]"]').length).to eq(2)
       # 更新ボタンをクリックする
       click_for_small_target_update
       # 小目標詳細ページに遷移していることを確認する
       expect(current_path).to eq(target_small_target_path(@target, @small_target))
       # 小目標の名前、詳細が反映されていることを確認する
-      expect(find('.small-target-name').text).to have_content("編集後") 
-      expect(find('.small-target-content-box').text).to have_content("編集後") 
+      expect(find('.small-target-name').text).to have_content('編集後')
+      expect(find('.small-target-content-box').text).to have_content('編集後')
       expect(find('.small-target-happiness').all('.is-empty').length).to eq(3)
       expect(find('.small-target-hardness').all('.is-empty').length).to eq(3)
       # Targetのポイント、経験値、レベルが変化していないことを確認する
@@ -243,8 +242,8 @@ RSpec.describe '小目標の編集機能', type: :system do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
       visit_small_target_edit_action(@target, @small_target)
       # 小目標の登録フォームに入力する
-      fill_in 'small_target_name', with: "編集後"
-      fill_in 'small_target_content', with: "編集後"
+      fill_in 'small_target_name', with: '編集後'
+      fill_in 'small_target_content', with: '編集後'
       choose '達成した'
       sleep(1)
       select '嬉しい！', from: 'small_target[happiness_grade]'
@@ -255,8 +254,8 @@ RSpec.describe '小目標の編集機能', type: :system do
       # 小目標詳細ページに遷移していることを確認する
       expect(current_path).to eq(target_small_target_path(@target, @small_target))
       # 小目標の名前、詳細が反映されていることを確認する
-      expect(find('.small-target-name').text).to have_content("編集後") 
-      expect(find('.small-target-content-box').text).to have_content("編集後") 
+      expect(find('.small-target-name').text).to have_content('編集後')
+      expect(find('.small-target-content-box').text).to have_content('編集後')
       expect(find('.small-target-happiness').all('.is-empty').length).to eq(3)
       expect(find('.small-target-hardness').all('.is-empty').length).to eq(3)
       # Targetのポイント、経験値、レベルが変化していないことを確認する
@@ -271,8 +270,8 @@ RSpec.describe '小目標の編集機能', type: :system do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
       visit_small_target_edit_action(@target, @small_target)
       # 小目標の登録フォームに入力する
-      fill_in 'small_target_name', with: "編集後"
-      fill_in 'small_target_content', with: "編集後"
+      fill_in 'small_target_name', with: '編集後'
+      fill_in 'small_target_content', with: '編集後'
       choose '達成した'
       sleep(1)
       select '嬉しい！', from: 'small_target[happiness_grade]'
@@ -282,8 +281,8 @@ RSpec.describe '小目標の編集機能', type: :system do
       # 小目標詳細ページに遷移していることを確認する
       expect(current_path).to eq(target_small_target_path(@target, @small_target))
       # 小目標の名前、詳細が反映されていることを確認する
-      expect(find('.small-target-name').text).to have_content("編集後") 
-      expect(find('.small-target-content-box').text).to have_content("編集後") 
+      expect(find('.small-target-name').text).to have_content('編集後')
+      expect(find('.small-target-content-box').text).to have_content('編集後')
       expect(find('.small-target-happiness').all('.star').length).to eq(2)
       expect(find('.small-target-hardness').all('.star').length).to eq(3)
       # Targetのポイント、経験値、レベルが変化していないことを確認する
@@ -296,17 +295,17 @@ RSpec.describe '小目標の編集機能', type: :system do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
       visit_small_target_edit_action(@target, @small_target)
       # 小目標の登録フォームに入力する
-      fill_in 'small_target_name', with: "編集後"
-      fill_in 'small_target_content', with: "編集後"
+      fill_in 'small_target_name', with: '編集後'
+      fill_in 'small_target_content', with: '編集後'
       # 達成状況選択用のラヂオボタンがないことを確認する
-      expect( all('input[name="small_target[is_achieved]"]').length ).to eq(0)
+      expect(all('input[name="small_target[is_achieved]"]').length).to eq(0)
       # 変更ボタンを押す
       click_for_small_target_update
       # 小目標詳細ページに遷移していることを確認する
       expect(current_path).to eq(target_small_target_path(@target, @small_target))
       # 小目標の名前、詳細が反映されていることを確認する
-      expect(find('.small-target-name').text).to have_content("編集後") 
-      expect(find('.small-target-content-box').text).to have_content("編集後") 
+      expect(find('.small-target-name').text).to have_content('編集後')
+      expect(find('.small-target-content-box').text).to have_content('編集後')
       expect(find('.small-target-happiness').all('.star').length).to eq(3)
       expect(find('.small-target-hardness').all('.star').length).to eq(1)
       # Targetのポイント、経験値、レベルが変化していないことを確認する
@@ -334,8 +333,8 @@ RSpec.describe '小目標の編集機能', type: :system do
       # 小目標の編集画面に遷移していることを確認する
       expect(current_path).to eq(target_small_target_path(@target, @small_target))
       # 小目標の名前、詳細が反映されていないことを確認する
-      expect(find('#small_target_name').value).to have_content(@small_target.name) 
-      expect(find('#small_target_content').value).to have_content(@small_target.content) 
+      expect(find('#small_target_name').value).to have_content(@small_target.name)
+      expect(find('#small_target_content').value).to have_content(@small_target.content)
       expect(find('.small-target-happiness').all('.star').length).to eq(3)
       expect(find('.small-target-hardness').all('.star').length).to eq(1)
       # Targetのポイント、経験値、レベルが変化していないことを確認する
@@ -350,8 +349,8 @@ RSpec.describe '小目標の編集機能', type: :system do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
       visit_small_target_edit_action(@target, @small_target)
       # 小目標の登録フォームに入力する（どちらも未達成状態）
-      fill_in 'small_target_name', with: "編集後"
-      fill_in 'small_target_content', with: "編集後"
+      fill_in 'small_target_name', with: '編集後'
+      fill_in 'small_target_content', with: '編集後'
       choose '達成した'
       sleep(1)
       select '未達成', from: 'small_target[happiness_grade]'
@@ -379,8 +378,8 @@ RSpec.describe '小目標の編集機能', type: :system do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
       visit_small_target_edit_action(@target, @small_target)
       # 小目標の登録フォームに入力する
-      fill_in 'small_target_name', with: "編集後"
-      fill_in 'small_target_content', with: "編集後"
+      fill_in 'small_target_name', with: '編集後'
+      fill_in 'small_target_content', with: '編集後'
       choose '達成した'
       sleep(1)
       select '未達成', from: 'small_target[happiness_grade]'
@@ -408,8 +407,8 @@ RSpec.describe '小目標の編集機能', type: :system do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
       visit_small_target_edit_action(@target, @small_target)
       # 小目標の登録フォームに入力する
-      fill_in 'small_target_name', with: "編集後"
-      fill_in 'small_target_content', with: "編集後"
+      fill_in 'small_target_name', with: '編集後'
+      fill_in 'small_target_content', with: '編集後'
       choose '達成した'
       sleep(1)
       select '嬉しい！', from: 'small_target[happiness_grade]'

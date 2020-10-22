@@ -37,7 +37,7 @@ module SmallTargetSupport
     # 小目標をクリックし、小目標詳細表示画面へ遷移する
     find_link(small_target.name, href: target_small_target_path(target, small_target)).click
     # 編集ページへのをクリックする
-    find_link("編集", href: edit_target_small_target_path(target, small_target)).click
+    find_link('編集', href: edit_target_small_target_path(target, small_target)).click
   end
 
   # 登録ボタンをクリックし、DBのレコード数の変動がないことを確認
