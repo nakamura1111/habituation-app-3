@@ -75,4 +75,5 @@ gem 'rails-i18n'
 gem 'active_hash'
 # 自動処理を実現する https://opiyotan.hatenablog.com/entry/rails-whenever
 gem 'whenever', :require => false
-
+# パンくずリスト
+gem "gretel"

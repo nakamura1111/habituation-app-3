@@ -5,6 +5,7 @@ class TargetsController < ApplicationController
   end
 
   def new
+    @user = current_user
     @target = Target.new
   end
 
