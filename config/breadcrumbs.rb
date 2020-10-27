@@ -8,7 +8,7 @@ crumb :target_show do |target|
 end
 
 crumb :target_new do |user|
-  link "目標設定", new_target_path
+  link "目標登録", new_target_path
   parent :root, user
 end
 
@@ -18,7 +18,7 @@ crumb :habit_show do |habit|
 end
 
 crumb :habit_new do |target|
-  link "習慣設定", new_target_habit_path(target)
+  link "習慣登録", new_target_habit_path(target)
   parent :target_show, target
 end
 
@@ -28,7 +28,7 @@ crumb :small_target_show do |small_target|
 end
 
 crumb :small_target_new do |target|
-  link "小目標設定", new_target_small_target_path(target)
+  link "小目標登録", new_target_small_target_path(target)
   parent :target_show, target
 end
 

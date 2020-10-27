@@ -42,6 +42,17 @@ RSpec.describe '習慣の登録機能', type: :system do
       expect(current_path).to eq(target_habits_path(@habit.target))
     end
   end
+  context '習慣の登録ページで表示されるもの' do
+    it 'パンくずリストにて、「目標一覧へのリンク」「目標詳細表示へのリンク」「習慣登録ページであるという表示」がある' do
+      target = @habit.target
+      # 習慣登録のページに遷移する
+      visit_habit_new_action(target)
+      # 各種表示を確認する
+      expect(page).to have_link("ユーザ：#{target.user.nickname}", href: root_path)
+      expect(page).to have_link("目標：#{target.name}", href: target_path(target))
+      expect(page).to have_content('習慣登録')
+    end
+  end
 end
 
 RSpec.describe '習慣の達成チェック機能', type: :system do
@@ -160,7 +171,7 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
     end
     it '達成率の違いで達成率のバーの色が異なる' do
       # 1 達成率100%
-      p '100%の場合'
+      p '  ↓ 100%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 1.0
       db_value_create_for_achieved_ratio(achieved_ratio)
@@ -168,57 +179,57 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       visit_habit_show_action(@habit.target, @habit)
       # 達成率のバーの色を確かめる
       habit_element = find('.habit-box')
-      p habit_element.find('.achieved-ratio-bar')[:value]
+      # p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-success')
       # 2 達成率60%
-      p '60%の場合'
+      p '  ↓ 60%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.6
       db_value_create_for_achieved_ratio(achieved_ratio)
       # 習慣の詳細ページへ遷移する
       visit target_habit_path(@habit.target, @habit)
       # 達成率のバーの色を確かめる
-      p habit_element.find('.achieved-ratio-bar')[:value]
+      # p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-success')
       # 3 達成率50%
-      p '50%の場合'
+      p '  ↓ 50%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.5
       db_value_create_for_achieved_ratio(achieved_ratio)
       # 習慣の詳細ページへ遷移する
       visit target_habit_path(@habit.target, @habit)
       # 達成率のバーの色を確かめる
-      p habit_element.find('.achieved-ratio-bar')[:value]
+      # p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-warning')
       # 4 達成率20%
-      p '20%の場合'
+      p '  ↓ 20%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.2
       db_value_create_for_achieved_ratio(achieved_ratio)
       # 習慣の詳細ページへ遷移する
       visit target_habit_path(@habit.target, @habit)
       # 達成率のバーの色を確かめる
-      p habit_element.find('.achieved-ratio-bar')[:value]
+      # p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-warning')
       # 5 達成率10%
-      p '10%の場合'
+      p '  ↓ 10%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.1
       db_value_create_for_achieved_ratio(achieved_ratio)
       # 習慣の詳細ページへ遷移する
       visit target_habit_path(@habit.target, @habit)
       # 達成率のバーの色を確かめる
-      p habit_element.find('.achieved-ratio-bar')[:value]
+      # p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-error')
       # 6 達成率0%
-      p '0%の場合'
+      p '  ↓ 0%の場合'
       # 達成率の確認のため、数値を入れておく(入力数値: 0 から 1, 最小単位: 0.01)
       achieved_ratio = 0.0
       db_value_create_for_achieved_ratio(achieved_ratio)
       # 習慣の詳細ページへ遷移する
       visit target_habit_path(@habit.target, @habit)
       # 達成率のバーの色を確かめる
-      p habit_element.find('.achieved-ratio-bar')[:value]
+      # p habit_element.find('.achieved-ratio-bar')[:value]
       expect(habit_element.find('.achieved-ratio-bar')[:class]).to have_content('is-error')
     end
     it '目標詳細ページへのリンクが踏める' do
@@ -226,6 +237,15 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       visit_habit_show_action(@habit.target, @habit)
       # 目標詳細へのリンクが踏めることを確認する
       expect(page).to have_link('目標の詳細', href: target_path(@habit.target))
+    end
+    it 'パンくずリストにて、「目標一覧へのリンク」「目標詳細表示へのリンク」「習慣詳細ページであるという表示」がある' do
+      target = @habit.target
+      # 習慣詳細表示のページに遷移する
+      visit_habit_show_action(target, @habit)
+      # 各種表示を確認する
+      expect(page).to have_link("ユーザ：#{target.user.nickname}", href: root_path)
+      expect(page).to have_link("目標：#{target.name}", href: target_path(target))
+      expect(page).to have_content("習慣：#{@habit.name}")
     end
   end
 end

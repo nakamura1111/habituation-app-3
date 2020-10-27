@@ -48,6 +48,15 @@ RSpec.describe '目標の登録機能', type: :system do
       expect(current_path).to eq(targets_path)
     end
   end
+  context '目標の登録ページで表示されるもの' do
+    it 'パンくずリストにて、「目標一覧へのリンク」「目標登録ページであるという表示」がある' do
+      # 目標登録ページに遷移する
+      visit_target_new_action(@target.user)
+      # 各種表示を確認する
+      expect(page).to have_link("ユーザ：#{@target.user.nickname}", href: root_path)
+      expect(page).to have_content('目標登録')
+    end
+  end
 end
 
 RSpec.describe '目標の一覧機能', type: :system do
@@ -134,7 +143,7 @@ RSpec.describe '目標の詳細表示機能', type: :system do
       # 小目標を未達成状態にする
       @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
       # ログインした上で、小目標の詳細ページへ遷移する
-      visit_small_target_show_action(@small_target.target, @small_target)
+      visit_small_target_show_action(@small_target)
       # 小目標の内容、嬉しさ、大変さが表示されていることを確認する
       small_target_element = find('.small-target-box')
       # 小目標の内容
@@ -146,7 +155,7 @@ RSpec.describe '目標の詳細表示機能', type: :system do
     end
     it '達成済みの小目標について、一部情報が載っている' do
       # ログインした上で、小目標の詳細ページへ遷移する
-      visit_small_target_show_action(@small_target.target, @small_target)
+      visit_small_target_show_action(@small_target)
       # 小目標の内容、嬉しさ、大変さ、小目標の詳細内容が表示されていることを確認する
       small_target_element = find('.small-target-box')
       # 小目標の内容
@@ -163,6 +172,14 @@ RSpec.describe '目標の詳細表示機能', type: :system do
       # 習慣登録と目標一覧のリンクが踏めることを確認する
       expect(page).to have_link('鍛錬メニューを追加', href: new_target_habit_path(target))
       expect(page).to have_link('目標の一覧', href: targets_path)
+    end
+    it 'パンくずリストにて、「目標一覧へのリンク」「目標詳細表示のページであるという表示」がある' do
+      target = @habit.target
+      # 目標詳細表示のページに遷移する
+      visit_target_show_action(target)
+      # 各種表示を確認する
+      expect(page).to have_link("ユーザ：#{target.user.nickname}", href: root_path)
+      expect(page).to have_content("目標：#{target.name}")
     end
   end
 end
