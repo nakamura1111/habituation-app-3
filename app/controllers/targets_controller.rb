@@ -1,5 +1,7 @@
 # 目標に関する機能を実装するためのコントローラー
 class TargetsController < ApplicationController
+  # before_action :current_user, only: [:index, :new]
+
   def index
     @targets = Target.where(user: current_user).includes(:user)
   end
@@ -36,6 +38,10 @@ class TargetsController < ApplicationController
     level, exp = Target.level_and_exp_calc(point)
     params.require(:target).permit(:name, :content).merge(user: current_user, point: point, level: level, exp: exp)
   end
+
+  # def current_user
+  #   @user = User.find(current_user.id)
+  # end
 
   # # 10expでレベルが1上がる設定になっている。(仮設定)
   # def level_and_exp_calc(point)

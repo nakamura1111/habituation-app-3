@@ -143,6 +143,17 @@ RSpec.describe '小目標の登録機能', type: :system do
       expect(current_path).to eq(target_small_targets_path(@target))
     end
   end
+  context '小目標の登録ページで表示されるもの' do
+    it 'パンくずリストにて、「目標一覧へのリンク」「目標詳細表示へのリンク」「小目標登録ページであるという表示」がある' do
+      target = @small_target.target
+      # 小目標登録のページに遷移する
+      visit_small_target_new_action(target)
+      # 各種表示を確認する
+      expect(page).to have_link("ユーザ：#{target.user.nickname}", href: root_path)
+      expect(page).to have_link("目標：#{target.name}", href: target_path(target))
+      expect(page).to have_content('小目標登録')
+    end
+  end
 end
 
 RSpec.describe '小目標の詳細表示機能', type: :system do
@@ -152,7 +163,7 @@ RSpec.describe '小目標の詳細表示機能', type: :system do
   context '小目標の詳細表示画面へ遷移できるとき' do
     it 'ログイン状態で遷移できる' do
       # ログインした上で、小目標の詳細ページへ遷移する
-      visit_small_target_show_action(@small_target.target, @small_target)
+      visit_small_target_show_action(@small_target)
       # 無事遷移できていることを確認する
       expect(current_path).to eq(target_small_target_path(@small_target.target, @small_target))
     end
@@ -168,7 +179,7 @@ RSpec.describe '小目標の詳細表示機能', type: :system do
   context '小目標の詳細表示画面で表示されるもの' do
     it '達成状態の小目標について、表示すべき全ての情報が全て載っている' do
       # ログインした上で、小目標の詳細ページへ遷移する
-      visit_small_target_show_action(@small_target.target, @small_target)
+      visit_small_target_show_action(@small_target)
       # 小目標の内容、嬉しさ、大変さ、小目標の詳細内容が表示されていることを確認する
       small_target_element = find('.small-target-box')
       # 小目標の内容
@@ -184,7 +195,7 @@ RSpec.describe '小目標の詳細表示機能', type: :system do
       # 小目標を未達成状態にする
       @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
       # ログインした上で、小目標の詳細ページへ遷移する
-      visit_small_target_show_action(@small_target.target, @small_target)
+      visit_small_target_show_action(@small_target)
       # 小目標の内容、嬉しさ、大変さ、小目標の詳細内容が表示されていることを確認する
       small_target_element = find('.small-target-box')
       # 小目標の内容
@@ -198,9 +209,18 @@ RSpec.describe '小目標の詳細表示機能', type: :system do
     end
     it '目標詳細ページへのリンクが踏める' do
       # ログインした上で、小目標の詳細ページへ遷移する
-      visit_small_target_show_action(@small_target.target, @small_target)
+      visit_small_target_show_action(@small_target)
       # 目標詳細へのリンクが踏めることを確認する
       expect(page).to have_link('目標の詳細', href: target_path(@small_target.target))
+    end
+    it 'パンくずリストにて、「目標一覧へのリンク」「目標詳細表示へのリンク」「小目標の詳細ページであるという表示」がある' do
+      target = @small_target.target
+      # 小目標詳細のページに遷移する
+      visit_small_target_show_action(@small_target)
+      # 各種表示を確認する
+      expect(page).to have_link("ユーザ：#{target.user.nickname}", href: root_path)
+      expect(page).to have_link("目標：#{target.name}", href: target_path(target))
+      expect(page).to have_content("小目標：#{@small_target.name}")
     end
   end
 end
@@ -215,7 +235,7 @@ RSpec.describe '小目標の編集機能', type: :system do
       # 達成状況を false にしておく
       @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
-      visit_small_target_edit_action(@target, @small_target)
+      visit_small_target_edit_action(@small_target)
       # 小目標の編集フォームに入力する
       fill_in 'small_target_name', with: '編集後'
       fill_in 'small_target_content', with: '編集後'
@@ -240,7 +260,7 @@ RSpec.describe '小目標の編集機能', type: :system do
       # 達成状況を false にしておく
       @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
-      visit_small_target_edit_action(@target, @small_target)
+      visit_small_target_edit_action(@small_target)
       # 小目標の登録フォームに入力する
       fill_in 'small_target_name', with: '編集後'
       fill_in 'small_target_content', with: '編集後'
@@ -268,7 +288,7 @@ RSpec.describe '小目標の編集機能', type: :system do
       # 達成状況を false にしておく
       @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
-      visit_small_target_edit_action(@target, @small_target)
+      visit_small_target_edit_action(@small_target)
       # 小目標の登録フォームに入力する
       fill_in 'small_target_name', with: '編集後'
       fill_in 'small_target_content', with: '編集後'
@@ -293,7 +313,7 @@ RSpec.describe '小目標の編集機能', type: :system do
     end
     it '達成状況が true のとき達成状況を操作することはできず、小目標が更新しても、目標の経験値・レベルが変動しない' do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
-      visit_small_target_edit_action(@target, @small_target)
+      visit_small_target_edit_action(@small_target)
       # 小目標の登録フォームに入力する
       fill_in 'small_target_name', with: '編集後'
       fill_in 'small_target_content', with: '編集後'
@@ -315,16 +335,16 @@ RSpec.describe '小目標の編集機能', type: :system do
       expect(@target.exp).to eq(0)            # exp
     end
   end
-  context '小目標が登録できないとき' do
-    it '未ログインユーザは小目標の登録画面に遷移できない' do
+  context '小目標が編集できないとき' do
+    it '未ログインユーザは小目標の編集画面に遷移できない' do
       # 小目標編集画面へ遷移する
       visit edit_target_small_target_path(@target, @small_target)
       # ログインページであることを確認する
       expect(current_path).to eq(new_user_session_path)
     end
-    it '入力内容を空にした場合、登録できない' do
+    it '入力内容を空にした場合、更新できない' do
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
-      visit_small_target_edit_action(@target, @small_target)
+      visit_small_target_edit_action(@small_target)
       # 小目標の登録フォームの入力
       fill_in 'small_target_name', with: ''
       fill_in 'small_target_content', with: ''
@@ -343,11 +363,11 @@ RSpec.describe '小目標の編集機能', type: :system do
       expect(@target.level).to eq(1)          # level
       expect(@target.exp).to eq(0)            # exp
     end
-    it '達成状況を true にした後、happiness_grade と hardness_grade が入力されていないと、登録されない' do
+    it '達成状況を true にした後、happiness_grade と hardness_grade が入力されていないと、更新されない' do
       # 達成状況を false にしておく
       @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
-      visit_small_target_edit_action(@target, @small_target)
+      visit_small_target_edit_action(@small_target)
       # 小目標の登録フォームに入力する（どちらも未達成状態）
       fill_in 'small_target_name', with: '編集後'
       fill_in 'small_target_content', with: '編集後'
@@ -372,11 +392,11 @@ RSpec.describe '小目標の編集機能', type: :system do
       expect(@target.level).to eq(1)          # level
       expect(@target.exp).to eq(0)            # exp
     end
-    it '達成状況を true にした後、happiness_gradeが入力されていないと、登録されない' do
+    it '達成状況を true にした後、happiness_gradeが入力されていないと、更新されない' do
       # 達成状況を false にしておく
       @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
-      visit_small_target_edit_action(@target, @small_target)
+      visit_small_target_edit_action(@small_target)
       # 小目標の登録フォームに入力する
       fill_in 'small_target_name', with: '編集後'
       fill_in 'small_target_content', with: '編集後'
@@ -401,11 +421,11 @@ RSpec.describe '小目標の編集機能', type: :system do
       expect(@target.level).to eq(1)          # level
       expect(@target.exp).to eq(0)            # exp
     end
-    it '達成状況を true にした後、hardness_grade が入力されていないと、登録されない' do
+    it '達成状況を true にした後、hardness_grade が入力されていないと、更新されない' do
       # 達成状況を false にしておく
       @small_target.update(is_achieved: false, happiness_grade: 0, hardness_grade: 0)
       # ログインの上で、小目標編集画面までリンクをたどり遷移する
-      visit_small_target_edit_action(@target, @small_target)
+      visit_small_target_edit_action(@small_target)
       # 小目標の登録フォームに入力する
       fill_in 'small_target_name', with: '編集後'
       fill_in 'small_target_content', with: '編集後'
@@ -429,6 +449,18 @@ RSpec.describe '小目標の編集機能', type: :system do
       expect(@target.point).to eq(0)          # point
       expect(@target.level).to eq(1)          # level
       expect(@target.exp).to eq(0)            # exp
+    end
+  end
+  context '小目標の編集ページで表示されるもの' do
+    it 'パンくずリストにて、「目標一覧へのリンク」「目標詳細表示へのリンク」「小目標編集ページであるという表示」がある' do
+      target = @small_target.target
+      # 小目標編集のページに遷移する
+      visit_small_target_edit_action(@small_target)
+      # 各種表示を確認する
+      expect(page).to have_link("ユーザ：#{target.user.nickname}", href: root_path)
+      expect(page).to have_link("目標：#{target.name}", href: target_path(target))
+      expect(page).to have_link("小目標：#{@small_target.name}", href: target_small_target_path(target, @small_target))
+      expect(page).to have_content('小目標編集')
     end
   end
 end

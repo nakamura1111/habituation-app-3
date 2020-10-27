@@ -19,7 +19,8 @@ module SmallTargetSupport
   end
 
   # 小目標の詳細ページまで遷移する
-  def visit_small_target_show_action(target, small_target)
+  def visit_small_target_show_action(small_target)
+    target = small_target.target
     # ログインする（トップページに遷移していることを確認済み）
     login_user(target.user)
     # 能力値名をクリックし、目標詳細表示画面へ遷移する
@@ -29,7 +30,8 @@ module SmallTargetSupport
   end
 
   # 小目標の編集ページまで遷移する
-  def visit_small_target_edit_action(target, small_target)
+  def visit_small_target_edit_action(small_target)
+    target = small_target.target
     # ログインする（トップページに遷移していることを確認済み）
     login_user(target.user)
     # 能力値名をクリックし、目標詳細表示画面へ遷移する

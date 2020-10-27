@@ -7,6 +7,14 @@ module TargetSupport
     find_link(target.name, href: target_path(target)).click
   end
 
+  # 目標登録ページへ遷移する
+  def visit_target_new_action(user)
+    # ログインする（トップページに遷移していることを確認済み）
+    login_user(user)
+    # 目標登録画面へ遷移する
+    find_link('目標を設定', href: new_target_path).click
+  end
+
   # 達成状況を表す表に正しく値が格納されているか調べる
   def display_achieved_status(habit_element)
     date_element = habit_element.all('.date-row th') #  日付表示をしている行の各セルの要素を取り出す
