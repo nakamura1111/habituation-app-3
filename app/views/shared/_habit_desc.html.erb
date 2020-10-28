@@ -26,7 +26,7 @@
           <th><%= achieved_status[0] %></th>
           <% else %>
           <th id=<%="achieved-check-cell-#{habit.id}"%> >
-            <%= link_to "達成したらチェック", update_achieved_status_target_habit_path(habit.target, habit), method: :put, id: "habit-achieved-check-#{habit.id}" %>
+            <%= link_to "達成したらチェック", update_achieved_status_target_habit_path(habit.target, habit), method: :put, id: "habit-achieved-check-#{habit.id}", class: "nes-btn is-success" %>
           </th>
           <% end %>
         </tr>

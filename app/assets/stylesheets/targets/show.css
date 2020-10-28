@@ -50,6 +50,10 @@
   margin: 10px;
   background-color: white;
 }
+.habit-new-link{
+  display: flex;
+  background-color: white;
+}
 /* /習慣一覧 */
 /* 小目標一覧 */
 .small-target-lists{
@@ -59,6 +63,10 @@
 }
 .small-target-box{
   margin: 10px;
+  background-color: white;
+}
+.small-target-new-link{
+  display: flex;
   background-color: white;
 }
 /* /小目標一覧 */

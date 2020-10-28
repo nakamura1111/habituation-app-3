@@ -1,7 +1,7 @@
 # 習慣に関する機能を実装するためのコントローラー
 class HabitsController < ApplicationController
   before_action :current_target, only: %i[new create show]
-  before_action :current_habit, only: %i[update_achieved_status show]
+  before_action :current_habit, only: %i[update_achieved_status update_active_status show]
 
   def new
     @habit = Habit.new
@@ -17,17 +17,17 @@ class HabitsController < ApplicationController
       render :new
     end
   end
-
+  # 習慣を今日達成した時にDBの情報を更新し、経験値を獲得する処理を行う
   def update_achieved_status
-    if update_transaction(@habit)
+    if achieved_stat_update_tx(@habit)
       @habit.reload
-      flash[:success] = '更新しました'
+      flash[:success] = '習慣の達成状況を更新しました'
       # channelを用いて、DBの変更をビューファイルに即時反映
       ActionCable.server.broadcast 'habits_achieved_status_channel', content: @habit
       ActionCable.server.broadcast 'targets_achieved_status_channel', content: @habit.target
     else
-      flash[:error] = '更新できませんでした'
-      render :index
+      flash[:error] = '更新できませんでした(バグのため、作成者への問い合わせが必要)'
+      redirect_to request.referer || root_path
     end
   end
 
@@ -39,6 +39,19 @@ class HabitsController < ApplicationController
     @achieved_ratio = @habit.achieved_days.to_f / passed_days * 100
     @achieved_ratio = 0 if passed_days <= 0
     @achieved_ratio.to_i
+  end
+
+  # 習慣のアクティブ・非アクティブを変える処理を行う
+  def update_active_status
+    if @habit.update(is_active: params[:is_active].to_i)
+      # @habit.reload
+      flash[:success] = '習慣の状態を更新しました'
+      redirect_to request.referer || root_path 
+      # ActionCable.server.broadcast 'habits_active_status_channel', content: @habit
+    else
+      flash[:error] = '更新できませんでした(バグのため、作成者への問い合わせが必要)'
+      redirect_to request.referer || root_path
+    end
   end
 
   private
@@ -57,7 +70,7 @@ class HabitsController < ApplicationController
   end
 
   # 達成状況と能力値の変動をDBに記録するメソッド
-  def update_transaction(habit)
+  def achieved_stat_update_tx(habit)
     ActiveRecord::Base.transaction do
       is_add = habit.achieved_or_not_binary & 1 # Targetのpointが増えるかどうかを判定
       raise ActiveRecord::Rollback unless habit.update(achieved_or_not_binary: habit.achieved_or_not_binary | 1, achieved_days: habit.achieved_days + 1)
@@ -66,22 +79,4 @@ class HabitsController < ApplicationController
       return true
     end
   end
-
-  # # Targetモデルに移動させたい
-  # def add_target_point(habit, is_add)
-  #   if is_add
-  #     point = habit.target.point + habit.difficulty_grade + 1
-  #     level, exp = level_and_exp_calc(point)
-  #     habit.target.update(point: point, level: level, exp: exp)
-  #   end
-  #   true
-  # end
-
-  # # 10expでレベルが1上がる設定になっている。(仮設定)
-  # # 被っているので、モデルに移動させる
-  # def level_and_exp_calc(point)
-  #   level = point / 10 + 1
-  #   exp = point % 10
-  #   [level, exp]
-  # end
 end
