@@ -41,26 +41,29 @@
   <%# 習慣一覧 %>
   <div class="nes-container with-title habit-lists">
     <h3 class="title"><%= "鍛錬メニュー" %></h3>
-    <% @target.habits.each_with_index do |habit, i| %>
-      <%# 習慣の有効状態に応じて背景色を変更する %>
-      <% if habit.is_active %>
-      <div class="nes-container with-title habit-box">
+    <div class="active-field">
+      <% @habits_active.each_with_index do |habit, i| %>
+      <div class="nes-container with-title habit-box-active">
         <h3 class='title'>
           <%= link_to habit.name, target_habit_path(@target, habit), method: :get, id: "habit-show-#{habit.id}" %>
         </h3>
-        <%= link_to "習慣を中断する", update_active_status_target_habit_path(habit.target, habit, is_active: 0), method: :put, class: "nes-btn is-error" %>
-        <%# 習慣の概要をまとめた部分テンプレート %>
-        <%= render partial: "shared/habit_desc", locals: {habit: habit, achieved_status: @achieved_statuses[i]} %>
+        <div class="inner-content">
+          <%= link_to "習慣を中断する", update_active_status_target_habit_path(habit.target, habit, is_active: 0), method: :put, class: "nes-btn is-error btn-for-not-active" %>
+          <%# 習慣の概要をまとめた部分テンプレート %>
+          <%= render partial: "shared/habit_desc", locals: {habit: habit, achieved_status: @achieved_statuses[i]} %>
+        </div>
       </div>
-      <% else %>
-      <div class="nes-container with-title habit-box">
+      <% end %>
+    </div>
+    <div class="not-active-field">
+      <% @habits_not_active.each_with_index do |habit, i| %>
+      <div class="nes-container with-title habit-box-not-active">
         <h3 class='title'><%= habit.name %></h3>
         <%# 習慣の有効化・無効化 %>
         <%= link_to "習慣を再開する", update_active_status_target_habit_path(habit.target, habit, is_active: 1), method: :put, class: "nes-btn is-success" %>
       </div>
       <% end %>
-      <%# /習慣の有効状態に応じて背景色を変更する %>
-    <% end %>
+    </div>
     <%# 習慣の登録画面へのリンク %>
     <div class="nes-container habit-new-link">
       <i class="nes-ash"></i>
@@ -71,16 +74,18 @@
   </div>
   <%# /習慣一覧 %>
   <%# 小目標一覧 %>
-  <div class="nes-container with-title small-target-lists">
+  <div class="nes-container with-title small-target-index">
     <h3 class="title"><%= "小目標・達成事項一覧" %></h3>
-    <% @target.small_targets.each_with_index do |small_target, i| %>
-    <div class="nes-container with-title small-target-box">
-      <h3 class='title'>
-        <%= link_to small_target.name, target_small_target_path(@target, small_target), method: :get, id: "small-target-show-#{small_target.id}" %>
-      </h3>
-      <%= render partial: "shared/small_target_desc", locals: {small_target: small_target} %>
+    <div class="small-target-lists">
+      <% @target.small_targets.each_with_index do |small_target, i| %>
+      <div class="nes-container with-title small-target-box">
+        <h3 class='title'>
+          <%= link_to small_target.name, target_small_target_path(@target, small_target), method: :get, id: "small-target-show-#{small_target.id}" %>
+        </h3>
+        <%= render partial: "shared/small_target_desc", locals: {small_target: small_target} %>
+      </div>
+      <% end %>
     </div>
-    <% end %>
     <div class="nes-container small-target-new-link">
       <i class="nes-ash"></i>
       <div class="nes-balloon from-left">

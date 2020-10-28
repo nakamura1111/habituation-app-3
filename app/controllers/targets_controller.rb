@@ -23,9 +23,11 @@ class TargetsController < ApplicationController
 
   def show
     @target = Target.find(params[:id])
+    @habits_active = @target.habits.where(is_active: true)
+    @habits_not_active = @target.habits.where(is_active: false)
     # 達成状況を配列形式に変換
     @achieved_statuses = []
-    @target.habits.each do |habit|
+    @habits_active.each do |habit|
       @achieved_statuses << Habit.translate_achieved_status(habit.achieved_or_not_binary)
     end
   end

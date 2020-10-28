@@ -1,36 +1,34 @@
-<div class="habit-desc">
-  <%# 難易度 %>
-  <div class="nes-container with-title habit-difficulty">
-    <h3 class="title"><%= "難易度" %></h3>
-    <div class="difficulty-grade">
-      <% (habit.difficulty_grade+1).times do |x| %>
-      <i class="nes-icon star"></i>
-      <% end %>
-    </div>
+<%# 難易度 %>
+<div class="nes-container with-title habit-difficulty">
+  <h3 class="title"><%= "難易度" %></h3>
+  <div class="difficulty-grade">
+    <% (habit.difficulty_grade+1).times do |x| %>
+    <i class="nes-icon star"></i>
+    <% end %>
   </div>
-  <%# 達成状況を表示するテーブル %>
-  <div class="habit-achieved-status-table">
-    <h3><%= '達成状況' %></h3>
-    <div class="nes-table-responsive">
-      <table class="nes-table is-bordered is-centered">
-        <tr class="date-row">
-          <th><%= l Date.today-6 %></th><th><%= l Date.today-5 %></th><th><%= l Date.today-4 %></th>
-          <th><%= l Date.today-3 %></th><th><%= l Date.today-2 %></th><th><%= l Date.today-1 %></th>
-          <th><%= l Date.today %>
-        </tr>
-        <tr class="achieved-status-row">
-          <th><%= achieved_status[6] %></th><th><%= achieved_status[5] %></th><th><%= achieved_status[4] %></th>
-          <th><%= achieved_status[3] %></th><th><%= achieved_status[2] %></th><th><%= achieved_status[1] %></th>
-          <%# 当日のみ達成できたかどうか、のチェック機能をつける %>
-          <% if achieved_status[0] == "〇" %>
-          <th><%= achieved_status[0] %></th>
-          <% else %>
-          <th id=<%="achieved-check-cell-#{habit.id}"%> >
-            <%= link_to "達成したらチェック", update_achieved_status_target_habit_path(habit.target, habit), method: :put, id: "habit-achieved-check-#{habit.id}", class: "nes-btn is-success" %>
-          </th>
-          <% end %>
-        </tr>
-      </table>
-    </div>
+</div>
+<%# 達成状況を表示するテーブル %>
+<div class="habit-achieved-status-table">
+  <h3><%= '達成状況' %></h3>
+  <div class="nes-table-responsive">
+    <table class="nes-table is-bordered is-centered">
+      <tr class="date-row">
+        <th><%= l Date.today-6 %></th><th><%= l Date.today-5 %></th><th><%= l Date.today-4 %></th>
+        <th><%= l Date.today-3 %></th><th><%= l Date.today-2 %></th><th><%= l Date.today-1 %></th>
+        <th><%= l Date.today %>
+      </tr>
+      <tr class="achieved-status-row">
+        <th><%= achieved_status[6] %></th><th><%= achieved_status[5] %></th><th><%= achieved_status[4] %></th>
+        <th><%= achieved_status[3] %></th><th><%= achieved_status[2] %></th><th><%= achieved_status[1] %></th>
+        <%# 当日のみ達成できたかどうか、のチェック機能をつける %>
+        <% if achieved_status[0] == "〇" %>
+        <th><%= achieved_status[0] %></th>
+        <% else %>
+        <th id=<%="achieved-check-cell-#{habit.id}"%> >
+          <%= link_to "達成したらチェック", update_achieved_status_target_habit_path(habit.target, habit), method: :put, id: "habit-achieved-check-#{habit.id}", class: "nes-btn is-success" %>
+        </th>
+        <% end %>
+      </tr>
+    </table>
   </div>
 </div>
