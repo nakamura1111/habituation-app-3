@@ -27,5 +27,8 @@
 set :output, "/log/schedule/cron.log"
 
 every 1.day, at: '12:00 pm' do
+  # 日付変更に従い、DBの習慣達成状況を変更する
   runner "Habit.update_achieved_status_by_day_progress"
+  # 日付変更に伴い、DBの習慣有効日数を変更する
+  
 end 

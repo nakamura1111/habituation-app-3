@@ -42,4 +42,7 @@ class Habit < ApplicationRecord
       habit.update(achieved_or_not_binary: habit.achieved_or_not_binary << 1)
     end
   end
+
+  # 習慣を有効にしていた日数(active_days)を加算するメソッド
+  
 end

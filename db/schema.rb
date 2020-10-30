@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_08_110508) do
+ActiveRecord::Schema.define(version: 2020_10_28_082904) do
 
   create_table "habits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_110508) do
     t.bigint "target_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "active_days", default: 1, null: false
     t.index ["target_id"], name: "index_habits_on_target_id"
   end
 
@@ -31,7 +32,6 @@ ActiveRecord::Schema.define(version: 2020_10_08_110508) do
     t.integer "happiness_grade", default: 0, null: false
     t.integer "hardness_grade", default: 0, null: false
     t.boolean "is_achieved", default: false, null: false
-
     t.bigint "target_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

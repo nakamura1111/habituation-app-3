@@ -46,11 +46,11 @@ class HabitsController < ApplicationController
     if @habit.update(is_active: params[:is_active].to_i)
       # @habit.reload
       flash[:success] = '習慣の状態を更新しました'
-      redirect_to request.referer || root_path
+      redirect_to request.referer || root_path 
       # ActionCable.server.broadcast 'habits_active_status_channel', content: @habit
     else
       flash[:error] = '習慣の達成状況を更新できませんでした(バグのため、作成者への問い合わせが必要)'
-      redirect_to request.referer || root_path
+      redirect_to root_path
     end
   end
 
