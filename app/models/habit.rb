@@ -35,14 +35,16 @@ class Habit < ApplicationRecord
     statuses
   end
 
-  # 達成状況の記録を日付を跨いだ際に変更するメソッド
-  def self.update_achieved_status_by_day_progress
-    habits = Habit.all.includes(:target)
+  # 日付を跨いだ際にDBの値を変更するメソッド
+  def self.update_stat_by_day_progress
+    habits = Habit.all
     habits.each do |habit|
-      habit.update(achieved_or_not_binary: habit.achieved_or_not_binary << 1)
+      if habit.is_active
+        active_days_tmp = habit.active_days + 1
+      else
+        active_days_tmp = habit.active_days
+      end
+      habit.update(achieved_or_not_binary: habit.achieved_or_not_binary << 1, active_days: active_days_tmp)
     end
   end
-
-  # 習慣を有効にしていた日数(active_days)を加算するメソッド
-  
 end

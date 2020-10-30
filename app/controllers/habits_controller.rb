@@ -1,7 +1,8 @@
 # 習慣に関する機能を実装するためのコントローラー
 class HabitsController < ApplicationController
-  before_action :current_target, only: %i[new create show]
-  before_action :current_habit, only: %i[update_achieved_status update_active_status show]
+  before_action :current_target, only: [:new, :create, :show]
+  before_action :current_habit, only: [:update_achieved_status, :update_active_status, :show]
+  before_action :move_to_target_show, only: :show 
 
   def new
     @habit = Habit.new
@@ -35,19 +36,17 @@ class HabitsController < ApplicationController
     # 達成状況を 01 -> ×〇 に変換
     @achieved_status = Habit.translate_achieved_status(@habit.achieved_or_not_binary)
     # 達成率の算出
-    passed_days = (Date.today - @habit.created_at.to_date + 1).to_i
-    @achieved_ratio = @habit.achieved_days.to_f / passed_days * 100
-    @achieved_ratio = 0 if passed_days <= 0
-    @achieved_ratio.to_i
+    @acieved_ratio = calc_achieved_ratio
   end
 
   # 習慣のアクティブ・非アクティブを変える処理を行う
   def update_active_status
-    if @habit.update(is_active: params[:is_active].to_i)
-      # @habit.reload
+    # 更新の際にactive_daysの日数を変更する(アクティブ状態が変更していて、今日習慣が達成されていない場合)
+    active_days_tmp = modify_active_days
+    # 更新
+    if @habit.update(is_active: params[:is_active].to_i, active_days: active_days_tmp)
       flash[:success] = '習慣の状態を更新しました'
-      redirect_to request.referer || root_path 
-      # ActionCable.server.broadcast 'habits_active_status_channel', content: @habit
+      redirect_to request.referer || root_path
     else
       flash[:error] = '習慣の達成状況を更新できませんでした(バグのため、作成者への問い合わせが必要)'
       redirect_to root_path
@@ -78,5 +77,29 @@ class HabitsController < ApplicationController
 
       return true
     end
+  end
+
+  # アクティブ状態の変更に伴い日数を変更するメソッド
+  def modify_active_days
+    if params[:is_active].to_b == true && @habit.is_active == false && (@habit.achieved_days&1).zero?
+      return @habit.active_days - 1
+    elsif params[:is_active].to_b == false && @habit.is_active == true && (@habit.achieved_days&1).zero?
+      return @habit.active_days + 1
+    else
+      return @habit.active_days
+    end
+  end
+
+  # アクティブ状態が偽のとき、特定のページを表示させないためのメソッド
+  def move_to_target_show
+    redirect_to target_path(@target) if @habit.is_active == false
+  end
+
+  # 達成率を算出するメソッド
+  def calc_achieved_ratio
+    passed_days = (Date.today - @habit.created_at.to_date + 1).to_i
+    achieved_ratio = @habit.achieved_days.to_f / passed_days * 100
+    achieved_ratio = 0 if passed_days <= 0
+    return achieved_ratio.to_i
   end
 end
