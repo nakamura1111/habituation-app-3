@@ -8,6 +8,7 @@ class Habit < ApplicationRecord
       validates :difficulty_grade
       validates :achieved_or_not_binary
       validates :achieved_days, numericality: { less_than: 1_000_000_000, allow_blank: true }
+      validates :active_days, numericality: { less_than: 1_000_000_000, allow_blank: true }
     end
   end
   validates :is_active, inclusion: { in: [true, false] }
@@ -35,11 +36,17 @@ class Habit < ApplicationRecord
     statuses
   end
 
-  # 達成状況の記録を日付を跨いだ際に変更するメソッド
-  def self.update_achieved_status_by_day_progress
-    habits = Habit.all.includes(:target)
+  # 日付を跨いだ際にDBの値を変更するメソッド
+  def self.update_stat_by_day_progress
+    puts " 'Habit.update_stat_by_day_progress' run at #{Time.now} "
+    habits = Habit.all
     habits.each do |habit|
-      habit.update(achieved_or_not_binary: habit.achieved_or_not_binary << 1)
+      active_days_tmp = if habit.is_active
+                          habit.active_days + 1
+                        else
+                          habit.active_days
+                        end
+      habit.update(achieved_or_not_binary: habit.achieved_or_not_binary << 1, active_days: active_days_tmp)
     end
   end
 end

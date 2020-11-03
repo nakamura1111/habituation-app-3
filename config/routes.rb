@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :habits, only: %i[new create show] do
       member do
         put 'update_achieved_status'
+        put 'update_active_status'
       end
     end
     resources :small_targets, only: %i[new create show edit update]

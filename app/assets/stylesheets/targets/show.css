@@ -46,19 +46,52 @@
   margin: 10px;
   background-color: green;
 }
-.habit-box{
+.active-field{
+  /* display: flex;
+  flex-direction: column; */
+}
+.habit-box-active{
   margin: 10px;
+  background-color: white;
+}
+.inner-content{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.not-active-field{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.habit-box-not-active{
+  margin: 10px;
+  background-color: white;
+  display: inline-block;
+}
+.habit-new-link{
+  display: flex;
   background-color: white;
 }
 /* /習慣一覧 */
 /* 小目標一覧 */
-.small-target-lists{
+.small-target-index{
   width: 95%;
   margin: 10px;
   background-color: green;
 }
+.small-target-lists{
+  display: flex;
+  flex-wrap: wrap;
+}
 .small-target-box{
   margin: 10px;
+  background-color: white;
+  width: auto;
+}
+.small-target-new-link{
+  display: flex;
   background-color: white;
 }
 /* /小目標一覧 */

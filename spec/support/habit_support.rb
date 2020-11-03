@@ -33,7 +33,6 @@ module HabitSupport
   # 任意の達成率を算出するため、DBの値を設定するメソッド(小数点以下は2桁にすること)
   def db_value_create_for_achieved_ratio(achieved_ratio)
     days_of_habit_practice = 7 * 100
-    time_of_habit_create = Time.now - ((days_of_habit_practice - 1) * 24 * 60 * 60)
-    @habit.update(achieved_days: (days_of_habit_practice * achieved_ratio).to_i, created_at: time_of_habit_create)
+    @habit.update(achieved_days: (days_of_habit_practice * achieved_ratio).to_i, active_days: days_of_habit_practice)
   end
 end

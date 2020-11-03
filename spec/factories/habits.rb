@@ -6,6 +6,7 @@ FactoryBot.define do
     achieved_or_not_binary { 0 }
     achieved_days { 0 }
     is_active { true }
+    active_days { 1 }
     association :target
   end
 end
