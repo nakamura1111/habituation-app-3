@@ -2,11 +2,11 @@
 自らをレベリングする習慣化アプリ
 
 # デプロイ先URL
-https://habituation-app.herokuapp.com/
+https://habituation-app-3.herokuapp.com/
 
 # テスト用アカウント
 - emailアドレス：sample1@sample.com
-- password:sample1
+- password : sample1
 
 # 利用方法
 1. ニックネームとemailアドレスとパスワードを設定し、ユーザ登録を行う。
@@ -49,8 +49,8 @@ https://habituation-app.herokuapp.com/
 |**習慣の登録**|能力値を上昇させるための行動を登録する|
 |**習慣の詳細**|鍛錬の具体的な内容や鍛錬の難易度など詳細が表示される|
 |**習慣の振り返り**|現在取り組んでいる鍛錬の一覧を表示し、達成できたか記録する|
-|実績の登録|中間目標や達成できたことを記録できる|
-|実績の編集|中間目標など事前にたてた実績を達成したことを記録する|
+|**実績の登録**|中間目標や達成できたことを記録できる|
+|**実績の編集**|中間目標など事前にたてた実績を達成したことを記録する|
 
 # データベース設計
 ![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2018.53.12.png)
