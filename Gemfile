@@ -74,6 +74,6 @@ gem 'rails-i18n'
 # プルダウン選択用のモデル作成
 gem 'active_hash'
 # 自動処理を実現する https://opiyotan.hatenablog.com/entry/rails-whenever
-gem 'whenever', :require => false
+gem 'whenever', require: false
 # パンくずリスト
 gem "gretel"

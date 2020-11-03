@@ -60,7 +60,7 @@
       <div class="nes-container with-title habit-box-not-active">
         <h3 class='title'><%= habit.name %></h3>
         <%# 習慣の有効化・無効化 %>
-        <%= link_to "習慣を再開する", update_active_status_target_habit_path(habit.target, habit, is_active: true), method: :put, class: "nes-btn is-success" %>
+        <%= link_to "習慣を再開する", update_active_status_target_habit_path(habit.target, habit, is_active: true), method: :put, class: "nes-btn is-success btn-for-active" %>
       </div>
       <% end %>
     </div>

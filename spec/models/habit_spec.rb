@@ -87,6 +87,28 @@ RSpec.describe Habit, type: :model do
         expect(@habit.errors.full_messages).to include('Is activeは一覧にありません')
       end
     end
+    context '習慣有効日数(active_days)が登録できないとき' do
+      it '空だと登録できない' do
+        @habit.active_days = ''
+        @habit.valid?
+        expect(@habit.errors.full_messages).to include('達成日数を入力してください')
+      end
+      it '数値以外は登録できない' do
+        @habit.active_days = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1)
+        @habit.valid?
+        expect(@habit.errors.full_messages).to include('達成日数は数値で入力してください')
+      end
+      it '整数以外は登録できない' do
+        @habit.active_days = Faker::Number.decimal(l_digits: 3, r_digits: 1)
+        @habit.valid?
+        expect(@habit.errors.full_messages).to include('達成日数は整数で入力してください')
+      end
+      it '1_000_000_000以上は登録できない' do
+        @habit.active_days = 1_000_000_000
+        @habit.valid?
+        expect(@habit.errors.full_messages).to include('達成日数は1000000000より小さい値にしてください')
+      end
+    end
     context '目標(Targetモデル)のidが登録できないとき' do
       it 'Targetが紐づいていないと登録できない' do
         @habit.target = nil
