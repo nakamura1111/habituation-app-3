@@ -286,15 +286,15 @@ RSpec.describe '習慣のアクティブ状態の変更機能', type: :system do
       # ログインして、目標の詳細ページに遷移
       visit_target_show_action(@target)
       # 習慣再開ボタンが存在しないことを確認する
-      expect(page).to have_no_selector(".btn-for-active")
+      expect(page).to have_no_selector('.btn-for-active')
       # 習慣中断ボタンをクリックして、アクティブ状況を更新する
-      find(".habit-box-active").click_link('習慣を中断する')
+      find('.habit-box-active').click_link('習慣を中断する')
       # 目標詳細表示画面に遷移していることを確認する
       expect(current_path).to eq(target_path(@target))
       # アクティブ状況が反映されていることを確認する
       @habit.reload
-      expect(page).to have_selector(".habit-box-not-active")
-      expect(page).to have_selector(".btn-for-active")
+      expect(page).to have_selector('.habit-box-not-active')
+      expect(page).to have_selector('.btn-for-active')
     end
   end
   context '習慣をアクティブにできるとき' do
@@ -304,15 +304,15 @@ RSpec.describe '習慣のアクティブ状態の変更機能', type: :system do
       # ログインして、目標の詳細ページに遷移
       visit_target_show_action(@target)
       # 習慣中断ボタンが存在しないことを確認する
-      expect(page).to have_no_selector(".btn-for-not-active")
+      expect(page).to have_no_selector('.btn-for-not-active')
       # 習慣再開ボタンをクリックして、アクティブ状況を更新する
-      find(".habit-box-not-active").click_link('習慣を再開する')
+      find('.habit-box-not-active').click_link('習慣を再開する')
       # 目標詳細表示画面に遷移していることを確認する
       expect(current_path).to eq(target_path(@target))
       # アクティブ状況が反映されていることを確認する
       @habit.reload
-      expect(page).to have_selector(".habit-box-active")
-      expect(page).to have_selector(".btn-for-not-active")
+      expect(page).to have_selector('.habit-box-active')
+      expect(page).to have_selector('.btn-for-not-active')
     end
   end
   context '習慣のアクティブ状態に伴い、アクティブ日数(active_days)が変更されるとき（日付変更時の処理を除く）' do
@@ -322,12 +322,12 @@ RSpec.describe '習慣のアクティブ状態の変更機能', type: :system do
       # ログインして、目標の詳細ページに遷移
       visit_target_show_action(@target)
       # 習慣再開ボタンをクリックして、アクティブ状況を更新する
-      find(".habit-box-not-active").click_link('習慣を再開する')
+      find('.habit-box-not-active').click_link('習慣を再開する')
       # 目標詳細表示画面に遷移していることを確認する
       expect(current_path).to eq(target_path(@target))
       # アクティブ状況が反映されていることを確認する
       @habit.reload
-      expect(page).to have_selector(".habit-box-active")
+      expect(page).to have_selector('.habit-box-active')
       expect(@habit.active_days).to eq(1)
     end
     it 'アクティブ状態に切り替えた かつ 今日、該当習慣を達成していない場合、日数を一日増やす' do
@@ -336,12 +336,12 @@ RSpec.describe '習慣のアクティブ状態の変更機能', type: :system do
       # ログインして、目標の詳細ページに遷移
       visit_target_show_action(@target)
       # 習慣再開ボタンをクリックして、アクティブ状況を更新する
-      find(".habit-box-not-active").click_link('習慣を再開する')
+      find('.habit-box-not-active').click_link('習慣を再開する')
       # 目標詳細表示画面に遷移していることを確認する
       expect(current_path).to eq(target_path(@target))
       # アクティブ状況が反映されていることを確認する
       @habit.reload
-      expect(page).to have_selector(".habit-box-active")
+      expect(page).to have_selector('.habit-box-active')
       expect(@habit.active_days).to eq(2)
     end
     it '非アクティブ状態に切り替えた かつ 今日、既に該当習慣を達成していた場合、日数は変化しない' do
@@ -350,12 +350,12 @@ RSpec.describe '習慣のアクティブ状態の変更機能', type: :system do
       # ログインして、目標の詳細ページに遷移
       visit_target_show_action(@target)
       # 習慣中断ボタンをクリックして、アクティブ状況を更新する
-      find(".habit-box-active").click_link('習慣を中断する')
+      find('.habit-box-active').click_link('習慣を中断する')
       # 目標詳細表示画面に遷移していることを確認する
       expect(current_path).to eq(target_path(@target))
       # アクティブ状況が反映されていることを確認する
       @habit.reload
-      expect(page).to have_selector(".habit-box-not-active")
+      expect(page).to have_selector('.habit-box-not-active')
       expect(@habit.active_days).to eq(1)
     end
     it '非アクティブ状態に切り替えた かつ 今日、該当習慣を達成していない場合、日数を一日減らす' do
@@ -364,12 +364,12 @@ RSpec.describe '習慣のアクティブ状態の変更機能', type: :system do
       # ログインして、目標の詳細ページに遷移
       visit_target_show_action(@target)
       # 習慣中断ボタンをクリックして、アクティブ状況を更新する
-      find(".habit-box-active").click_link('習慣を中断する')
+      find('.habit-box-active').click_link('習慣を中断する')
       # 目標詳細表示画面に遷移していることを確認する
       expect(current_path).to eq(target_path(@target))
       # アクティブ状況が反映されていることを確認する
       @habit.reload
-      expect(page).to have_selector(".habit-box-not-active")
+      expect(page).to have_selector('.habit-box-not-active')
       expect(@habit.active_days).to eq(0)
     end
   end

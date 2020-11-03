@@ -2,7 +2,7 @@
 class HabitsController < ApplicationController
   before_action :current_target, only: [:new, :create, :show]
   before_action :current_habit, only: [:update_achieved_status, :update_active_status, :show]
-  before_action :move_to_target_show, only: :show 
+  before_action :move_to_target_show, only: :show
 
   def new
     @habit = Habit.new
@@ -18,6 +18,7 @@ class HabitsController < ApplicationController
       render :new
     end
   end
+
   # 習慣を今日達成した時にDBの情報を更新し、経験値を獲得する処理を行う
   def update_achieved_status
     if achieved_stat_update_tx(@habit)
@@ -82,13 +83,13 @@ class HabitsController < ApplicationController
   # アクティブ状態の変更に伴い日数を変更するメソッド
   def modify_active_days
     # アクティブ状態に切り替える かつ 今日、該当習慣を達成していない場合、日数を一日増やす
-    if @habit.is_active == false && params[:is_active] == "true" && (@habit.achieved_or_not_binary&1).zero?
-      return @habit.active_days + 1
+    if @habit.is_active == false && params[:is_active] == 'true' && (@habit.achieved_or_not_binary & 1).zero?
+      @habit.active_days + 1
     # 非アクティブ状態に切り替える かつ 今日、該当習慣を達成していない場合、日数を一日減らす
-    elsif @habit.is_active == true && params[:is_active] == "false" && (@habit.achieved_or_not_binary&1).zero?
-      return @habit.active_days - 1
+    elsif @habit.is_active == true && params[:is_active] == 'false' && (@habit.achieved_or_not_binary & 1).zero?
+      @habit.active_days - 1
     else
-      return @habit.active_days
+      @habit.active_days
     end
   end
 
@@ -100,7 +101,7 @@ class HabitsController < ApplicationController
   # 達成率を算出するメソッド
   def calc_achieved_ratio
     achieved_ratio = @habit.achieved_days.to_f / @habit.active_days * 100
-    achieved_ratio = 0 if achieved_ratio == nil
-    return achieved_ratio.to_i
+    achieved_ratio = 0 if achieved_ratio.nil?
+    achieved_ratio.to_i
   end
 end

@@ -41,11 +41,11 @@ class Habit < ApplicationRecord
     puts " 'Habit.update_stat_by_day_progress' run at #{Time.now} "
     habits = Habit.all
     habits.each do |habit|
-      if habit.is_active
-        active_days_tmp = habit.active_days + 1
-      else
-        active_days_tmp = habit.active_days
-      end
+      active_days_tmp = if habit.is_active
+                          habit.active_days + 1
+                        else
+                          habit.active_days
+                        end
       habit.update(achieved_or_not_binary: habit.achieved_or_not_binary << 1, active_days: active_days_tmp)
     end
   end
