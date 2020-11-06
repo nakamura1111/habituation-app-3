@@ -1,3 +1,4 @@
+/* 難易度 */
 .habit-difficulty{
   margin: 10px;
   display: inline-block;
@@ -5,3 +6,14 @@
 .difficulty-grade{
   display: flex;
 }
+/* /難易度 */
+
+/* 達成状況 */
+.habit-achieved-status-table{
+  overflow-x: scroll;
+}
+
+.achieve-btn{
+  white-space: nowrap;
+}
+/* /達成状況 */

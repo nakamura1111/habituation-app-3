@@ -8,7 +8,7 @@
   </div>
 </div>
 <%# 達成状況を表示するテーブル %>
-<div class="habit-achieved-status-table">
+<div class="habit-achieved-status habit-achieved-status-table">
   <h3><%= '達成状況' %></h3>
   <div class="nes-table-responsive">
     <table class="nes-table is-bordered is-centered">
@@ -24,8 +24,8 @@
         <% if achieved_status[0] == "〇" %>
         <th><%= achieved_status[0] %></th>
         <% else %>
-        <th id=<%="achieved-check-cell-#{habit.id}"%> >
-          <%= link_to "達成したらチェック", update_achieved_status_target_habit_path(habit.target, habit), method: :put, id: "habit-achieved-check-#{habit.id}", class: "nes-btn is-success" %>
+        <th id=<%="achieved-check-cell-#{habit.id}"%> class="tmp1" >
+          <%= link_to "達成したらチェック", update_achieved_status_target_habit_path(habit.target, habit), method: :put, id: "habit-achieved-check-#{habit.id}", class: "nes-btn is-success achieve-btn" %>
         </th>
         <% end %>
       </tr>
