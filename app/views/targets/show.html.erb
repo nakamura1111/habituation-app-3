@@ -1,5 +1,4 @@
 <% breadcrumb :target_show, @target %>
-<p>jQuery稼働テスト</p>
 <div class="nes-container with-title main">
   <h2 class="title"><%= "目標詳細表示" %></h2>
   <%# 目標詳細表示の説明 %>
@@ -41,7 +40,7 @@
   <%# /リンク %>
   <%# 習慣一覧 %>
   <div class="nes-container with-title habit-lists">
-    <h3 class="title"><%= "鍛錬メニュー" %></h3>
+    <h3 class="title"><%= "鍛錬メニュー（非表示中）" %></h3>
     <div class="active-field hidden">
       <% @habits_active.each_with_index do |habit, i| %>
       <div class="nes-container with-title habit-box-active">
@@ -76,7 +75,7 @@
   <%# /習慣一覧 %>
   <%# 小目標一覧 %>
   <div class="nes-container with-title small-target-index">
-    <h3 class="title"><%= "小目標・達成事項一覧" %></h3>
+    <h3 class="title"><%= "小目標・達成事項一覧（非表示中）" %></h3>
     <div class="small-target-lists hidden">
       <% @target.small_targets.each_with_index do |small_target, i| %>
       <div class="nes-container with-title small-target-box">

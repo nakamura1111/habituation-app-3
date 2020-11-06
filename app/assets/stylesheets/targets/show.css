@@ -46,6 +46,10 @@
   margin: 10px;
   background-color: green;
 }
+.habit-lists > .title{
+  cursor: pointer;
+  color: lightblue;
+}
 .habit-lists > .hidden{
   display: none;
 }
@@ -83,6 +87,10 @@
   width: 95%;
   margin: 10px;
   background-color: green;
+}
+.small-target-index > .title{
+  cursor: pointer;
+  color: lightblue;
 }
 .small-target-index > .hidden{
   display: none;

@@ -23,12 +23,12 @@
     <%# /小目標名＆詳細 %>
     <%# 達成状況 %>
     <% if @small_target.is_achieved %>
-    <div class="nes-container">
+    <div class="nes-container achieved-result-display">
       <%= render partial: "shared/ash_talk", locals: {talk_content: "この小目標は達成しているよ"} %>
       <%= render partial: "shared/small_target_desc", locals: {small_target: @small_target} %>
     </div>
     <% else %>
-    <div class="nes-container">
+    <div class="nes-container achieved-result-input">
       <%= render partial: "shared/ash_talk", locals: {talk_content: "この小目標は達成してる？"} %>
       <%= f.label :is_achieved_true, "達成した" %>
       <%= f.radio_button :is_achieved, true %>
