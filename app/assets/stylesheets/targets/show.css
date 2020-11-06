@@ -46,6 +46,9 @@
   margin: 10px;
   background-color: green;
 }
+.habit-lists > .hidden{
+  display: none;
+}
 .active-field{
   /* display: flex;
   flex-direction: column; */
@@ -80,6 +83,9 @@
   width: 95%;
   margin: 10px;
   background-color: green;
+}
+.small-target-index > .hidden{
+  display: none;
 }
 .small-target-lists{
   display: flex;
